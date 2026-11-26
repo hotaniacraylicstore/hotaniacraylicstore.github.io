@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Collections | HOTANI ACRYLIC STORE</title>
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        .collections-page {
+            max-width: 1200px;
+            margin: 45px auto;
+            padding: 20px;
+        }
+
+        .collections-heading {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .collections-heading h1 {
+            font-size: 34px;
+            margin-bottom: 12px;
+        }
+
+        .collections-heading p {
+            color: #777;
+        }
+
+        .collections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .collection-card {
+            display: block;
+            padding: 35px 20px;
+            text-align: center;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #111;
+            background: #fff;
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+
+        .collection-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,.08);
+        }
+
+        .collection-card h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .collection-card p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .collections-heading h1 {
+                font-size: 27px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="collections-page">
+
+        <div class="collections-heading">
+            <h1>Our Collections</h1>
+            <p>Explore all collections at HOTANI ACRYLIC STORE.</p>
+        </div>
+
+        <div class="collections-grid">
+
+            <a href="islamic-calligraphy.html" class="collection-card">
+                <h2>Islamic Calligraphy</h2>
+                <p>Beautiful Islamic artwork and designs.</p>
+            </a>
+
+            <a href="modern-wall-art.html" class="collection-card">
+                <h2>Modern Wall Art</h2>
+                <p>Creative designs for your walls.</p>
+            </a>
+
+            <a href="acrylic-mirrors.html" class="collection-card">
+                <h2>Acrylic Mirrors</h2>
+                <p>Stylish acrylic mirror collections.</p>
+            </a>
+
+            <a href="wall-clocks.html" class="collection-card">
+                <h2>Wall Clocks</h2>
+                <p>Decorative clocks for your spaces.</p>
+            </a>
+
+            <a href="custom-plates.html" class="collection-card">
+                <h2>Custom Name & Number Plates</h2>
+                <p>Personalized designs made for you.</p>
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
