@@ -1380,3 +1380,24 @@ section {
     border-color: var(--accent);
     color: #ffffff;
 }
+/* FIVE CATEGORY LAYOUT */
+
+#shop-by-category .category-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 18px;
+}
+
+/* TABLET */
+@media (max-width: 900px) {
+    #shop-by-category .category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    #shop-by-category .category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+}
