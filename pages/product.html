@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | HOTANI ACRYLIC STORE</title>
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        .product-detail-page {
+            max-width: 1100px;
+            margin: 45px auto;
+            padding: 20px;
+        }
+
+        .product-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .product-detail-image img {
+            width: 100%;
+            display: block;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .product-detail-info h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .detail-price {
+            font-size: 25px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .detail-old-price {
+            color: #999;
+            text-decoration: line-through;
+            font-size: 17px;
+            margin-right: 10px;
+        }
+
+        .detail-description {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .detail-stock {
+            margin-bottom: 20px;
+            color: #38834b;
+        }
+
+        .detail-quantity {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .detail-quantity input {
+            width: 75px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .detail-add-button {
+            padding: 14px 28px;
+            background: #111;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .detail-add-button:hover {
+            background: #444;
+        }
+
+        .product-not-found {
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .product-not-found a {
+            color: #111;
+        }
+
+        @media (max-width: 700px) {
+            .product-detail {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .product-detail-info h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="product-detail-page">
+
+        <div id="product-detail-container">
+            <p>Loading product...</p>
+        </div>
+
+    </main>
+
+    <script src="../data/products.js"></script>
+
+    <script>
+        const container = document.getElementById("product-detail-container");
+
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get("id");
+
+        const product = window.HOTANI_GET_PRODUCT(productId);
+
+        function formatPrice(price) {
+            return "Rs. " + Number(price).toLocaleString("en-PK");
+        }
+
+        if (!product) {
+
+            container.innerHTML = `
+                <div class="product-not-found">
+                    <h1>Product Not Found</h1>
+                    <p>This product is currently unavailable.</p>
+                    <a href="../index.html">Back to Home</a>
+                </div>
+            `;
+
+        } else {
+
+            const finalPrice = Number(product.offerPrice) > 0
+                ? Number(product.offerPrice)
+                : Number(product.price);
+
+            const oldPrice = Number(product.offerPrice) > 0
+                ? `<span class="detail-old-price">${formatPrice(product.price)}</span>`
+                : "";
+
+            container.innerHTML = `
+                <div class="product-detail">
+
+                    <div class="product-detail-image">
+                        <img src="../${product.image}" alt="${product.name}">
+                    </div>
+
+                    <div class="product-detail-info">
+
+                        <h1>${product.name}</h1>
+
+                        <div class="detail-price">
+                            ${oldPrice}
+                            ${formatPrice(finalPrice)}
+                        </div>
+
+                        <p class="detail-description">
+                            ${product.description || "Discover this beautiful product from HOTANI ACRYLIC STORE."}
+                        </p>
+
+                        <p class="detail-stock">
+                            ${Number(product.stock) > 0
+                                ? "In Stock"
+                                : "Availability will be confirmed soon."}
+                        </p>
+
+                        <div class="detail-quantity">
+                            <label for="product-quantity">Quantity:</label>
+                            <input
+                                type="number"
+                                id="product-quantity"
+                                value="1"
+                                min="1"
+                                max="${Number(product.stock) || 1}"
+                            >
+                        </div>
+
+                        <button
+                            class="detail-add-button"
+                            id="detail-add-to-cart"
+                            ${Number(product.stock) <= 0 ? "disabled" : ""}
+                        >
+                            Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+
+            document.getElementById("detail-add-to-cart").addEventListener("click", function () {
+
+                const quantityInput = document.getElementById("product-quantity");
+                const quantity = Math.max(1, Number(quantityInput.value) || 1);
+
+                let cart = [];
+
+                try {
+                    cart = JSON.parse(localStorage.getItem("hotani_cart")) || [];
+                } catch (error) {
+                    cart = [];
+                }
+
+                const existing = cart.find(item => item.id === product.id);
+
+                if (existing) {
+                    existing.quantity += quantity;
+                } else {
+                    cart.push({
+                        id: product.id,
+                        name: product.name,
+                        price: finalPrice,
+                        image: product.image,
+                        quantity: quantity
+                    });
+                }
+
+                localStorage.setItem("hotani_cart", JSON.stringify(cart));
+
+                alert("Product added to cart successfully!");
+
+            });
+
+        }
+    </script>
+
+</body>
+</html>
