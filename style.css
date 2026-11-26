@@ -1361,3 +1361,22 @@ section {
         grid-template-columns: 1fr;
     }
 }
+/* ADD TO CART BUTTON */
+
+.add-to-cart-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 11px 10px;
+    border: 1px solid #222222;
+    background: #222222;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+}
