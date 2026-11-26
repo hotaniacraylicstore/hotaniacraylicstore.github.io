@@ -1,520 +1,402 @@
 
-/* ==========================================
-   HOTANI ACRYLIC STORE - JAVASCRIPT
-========================================== */
+/* =========================================
+   HOTANI ACRYLIC STORE
+   MAIN JAVASCRIPT
+========================================= */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
 
     /* STORE SETTINGS */
 
-    const STORE = {
+    window.HOTANI_STORE = {
         name: "HOTANI ACRYLIC STORE",
-        whatsapp: "", // Yahan WhatsApp number likhen
-        currency: "PKR"
+        whatsapp: "", // WhatsApp number baad mein add hoga
+        currency: "PKR",
+        currencySymbol: "Rs."
     };
 
-    /* ANNOUNCEMENT BAR */
 
-    const announcement = document.getElementById("announcement-bar");
+    /* LOAD WEBSITE SECTIONS */
 
-    if (announcement) {
-        announcement.innerHTML = `
-            <p>✨ Welcome to HOTANI ACRYLIC STORE | Premium Islamic Wall Decor ✨</p>
-        `;
-    }
-
-    /* HEADER */
-
-    const header = document.getElementById("site-header");
-
-    if (header) {
-        header.innerHTML = `
-            <div class="header-container">
-
-                <a href="index.html" class="store-logo">
-                    <img src="images/logo/Logo.jpg" alt="HOTANI ACRYLIC STORE">
-                </a>
-
-                <div class="header-search">
-                    <input type="search" id="product-search"
-                    placeholder="Search for products...">
-                    <button type="button" id="search-button">⌕</button>
-                </div>
-
-                <div class="header-icons">
-                    <a href="#" aria-label="Account">♙</a>
-                    <a href="#" aria-label="Wishlist">♡</a>
-                    <a href="#" id="cart-button" aria-label="Cart">
-                        🛒 <span id="cart-count">0</span>
-                    </a>
-                </div>
-
-            </div>
-        `;
-    }
-
-    /* NAVIGATION */
-
-    const navigation = document.getElementById("main-navigation");
-
-    if (navigation) {
-        navigation.innerHTML = `
-            <button class="mobile-menu-btn" type="button"
-            aria-label="Open menu">☰</button>
-
-            <ul class="navigation-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#shop-by-category">Categories</a></li>
-                <li><a href="#featured-collection">Featured</a></li>
-                <li><a href="#islamic-art-collection">Islamic Art</a></li>
-                <li><a href="#wall-art-collection">Wall Art</a></li>
-                <li><a href="#home-decor-collection">Home Decor</a></li>
-                <li><a href="#custom-design">Custom Design</a></li>
-                <li><a href="#site-footer">Contact</a></li>
-            </ul>
-        `;
-    }
-
-    /* MOBILE MENU */
-
-    const menuButton = document.querySelector(".mobile-menu-btn");
-    const navigationLinks = document.querySelector(".navigation-links");
-
-    if (menuButton && navigationLinks) {
-
-        menuButton.addEventListener("click", function () {
-            navigationLinks.classList.toggle("active");
-        });
-
-        navigationLinks.querySelectorAll("a").forEach(function (link) {
-            link.addEventListener("click", function () {
-                navigationLinks.classList.remove("active");
-            });
-        });
-    }
-
-    /* SHOPPING BENEFITS */
-
-    const benefits = document.getElementById("shopping-benefits");
-
-    if (benefits) {
-        benefits.innerHTML = `
-            <div class="container benefits-container">
-                <div class="benefit-item">
-                    <span>🚚</span>
-                    <h4>Nationwide Delivery</h4>
-                    <p>Delivery Across Pakistan</p>
-                </div>
-
-                <div class="benefit-item">
-                    <span>✦</span>
-                    <h4>Premium Quality</h4>
-                    <p>Beautiful Acrylic Designs</p>
-                </div>
-
-                <div class="benefit-item">
-                    <span>🔒</span>
-                    <h4>Secure Shopping</h4>
-                    <p>Easy Order Process</p>
-                </div>
-
-                <div class="benefit-item">
-                    <span>💬</span>
-                    <h4>Customer Support</h4>
-                    <p>We're Here to Help</p>
-                </div>
-            </div>
-        `;
-    }
-
-    /* CATEGORY DATA */
-
-    const categories = [
-        {
-            name: "Islamic Art",
-            folder: "islamic-art",
-            image: "images/categories/islamic-art.jpg"
-        },
-        {
-            name: "Wall Art",
-            folder: "wall-art",
-            image: "images/categories/wall-art.jpg"
-        },
-        {
-            name: "Home Decor",
-            folder: "home-decor",
-            image: "images/categories/home-decor.jpg"
-        },
-        {
-            name: "Custom Design",
-            folder: "custom-design",
-            image: "images/categories/custom-design.jpg"
-        }
+    const sectionFiles = [
+        "sections/announcement.js",
+        "sections/header.js",
+        "sections/navigation.js",
+        "sections/hero-slider.js",
+        "sections/benefits.js",
+        "sections/categories.js",
+        "sections/islamic-calligraphy.js",
+        "sections/modern-wall-art.js",
+        "sections/acrylic-mirrors.js",
+        "sections/custom-plates.js",
+        "sections/stock-announcement.js",
+        "sections/reviews.js",
+        "sections/why-choose-us.js",
+        "sections/video-showcase.js",
+        "sections/footer.js"
     ];
 
-    /* CATEGORY SECTION */
+    async function loadSection(file) {
 
-    const categorySection = document.getElementById("shop-by-category");
+        return new Promise(function (resolve) {
 
-    if (categorySection) {
-        categorySection.innerHTML = `
-            <div class="container">
-                <div class="section-heading">
-                    <h2>Shop By Category</h2>
-                    <div class="gold-line"></div>
-                    <p>Explore our premium acrylic collections</p>
-                </div>
+            const script = document.createElement("script");
 
-                <div class="category-grid">
-                    ${categories.map(category => `
-                        <a class="category-card"
-                        href="products/${category.folder}/index.html">
+            script.src = file;
+            script.onload = resolve;
 
-                            <img src="${category.image}"
-                            alt="${category.name}"
-                            onerror="this.style.display='none'">
+            script.onerror = function () {
+                console.warn("Section file not created yet:", file);
+                resolve();
+            };
 
-                            <div class="category-info">
-                                <h3>${category.name}</h3>
-                                <span>Explore Collection →</span>
-                            </div>
+            document.body.appendChild(script);
 
-                        </a>
-                    `).join("")}
-                </div>
-            </div>
-        `;
-    }
-
-    /* COLLECTION PLACEHOLDERS */
-
-    function createCollection(id, title, description) {
-
-        const section = document.getElementById(id);
-
-        if (!section) return;
-
-        section.innerHTML = `
-            <div class="container">
-                <div class="section-heading">
-                    <h2>${title}</h2>
-                    <div class="gold-line"></div>
-                    <p>${description}</p>
-                </div>
-
-                <div class="product-grid" id="${id}-products">
-                    <p class="empty-products">
-                        Products will be added soon.
-                    </p>
-                </div>
-            </div>
-        `;
-    }
-
-    createCollection(
-        "featured-collection",
-        "Featured Collection",
-        "Discover our specially selected designs"
-    );
-
-    createCollection(
-        "islamic-art-collection",
-        "Islamic Art Collection",
-        "Elegant Islamic calligraphy for your home"
-    );
-
-    createCollection(
-        "wall-art-collection",
-        "Wall Art Collection",
-        "Transform your walls with beautiful artwork"
-    );
-
-    createCollection(
-        "home-decor-collection",
-        "Home Decor Collection",
-        "Add elegance to every corner of your home"
-    );
-
-    createCollection(
-        "product-collections",
-        "All Products",
-        "Explore our complete product collection"
-    );
-
-    /* CUSTOM DESIGN */
-
-    const customDesign = document.getElementById("custom-design");
-
-    if (customDesign) {
-        customDesign.innerHTML = `
-            <div class="container">
-                <h2>Looking for a Custom Design?</h2>
-                <p>Create a unique acrylic design according to your choice.</p>
-                <a href="#" class="btn-primary" id="custom-order">
-                    Request Custom Design
-                </a>
-            </div>
-        `;
-    }
-
-    /* BRAND STORY */
-
-    const brandStory = document.getElementById("brand-story");
-
-    if (brandStory) {
-        brandStory.innerHTML = `
-            <div class="container">
-                <div class="section-heading">
-                    <h2 style="color:#F5F1E8;">About HOTANI ACRYLIC</h2>
-                    <div class="gold-line"></div>
-                </div>
-
-                <p style="text-align:center;max-width:800px;margin:auto;">
-                    HOTANI ACRYLIC brings elegance to your spaces
-                    through premium acrylic Islamic art, beautiful
-                    wall decor and unique home decoration designs.
-                </p>
-            </div>
-        `;
-    }
-
-    /* CUSTOMER REVIEWS */
-
-    const reviews = document.getElementById("customer-reviews");
-
-    if (reviews) {
-        reviews.innerHTML = `
-            <div class="container">
-                <div class="section-heading">
-                    <h2>Customer Reviews</h2>
-                    <div class="gold-line"></div>
-                    <p>What our customers say</p>
-                </div>
-
-                <p style="text-align:center;">
-                    Customer reviews will appear here.
-                </p>
-            </div>
-        `;
-    }
-
-    /* VIDEO SHOWCASE */
-
-    const videoShowcase = document.getElementById("video-showcase");
-
-    if (videoShowcase) {
-        videoShowcase.innerHTML = `
-            <div class="container">
-                <div class="section-heading">
-                    <h2>Our Video Showcase</h2>
-                    <div class="gold-line"></div>
-                    <p>Explore our products in action</p>
-                </div>
-
-                <div id="store-videos"></div>
-            </div>
-        `;
-    }
-
-    /* NEWSLETTER */
-
-    const newsletter = document.getElementById("newsletter");
-
-    if (newsletter) {
-        newsletter.innerHTML = `
-            <div class="container">
-                <h2>Stay Connected</h2>
-                <p>Follow HOTANI ACRYLIC for new designs and updates.</p>
-            </div>
-        `;
-    }
-
-    /* FOOTER */
-
-    const footer = document.getElementById("site-footer");
-
-    if (footer) {
-        footer.innerHTML = `
-            <div class="container">
-                <h2>HOTANI ACRYLIC STORE</h2>
-                <p>Premium Islamic Acrylic Wall Decor</p>
-
-                <div style="margin:20px 0;">
-                    <a href="index.html">Home</a> |
-                    <a href="#shop-by-category">Categories</a> |
-                    <a href="#brand-story">About Us</a> |
-                    <a href="#newsletter">Contact</a>
-                </div>
-
-                <p>© ${new Date().getFullYear()} HOTANI ACRYLIC STORE.
-                All Rights Reserved.</p>
-            </div>
-        `;
-    }
-
-    /* CART STORAGE */
-
-    let cart = JSON.parse(localStorage.getItem("hotaniCart")) || [];
-
-    function updateCartCount() {
-        const count = document.getElementById("cart-count");
-
-        if (count) {
-            count.textContent = cart.reduce(
-                (total, item) => total + item.quantity, 0
-            );
-        }
-    }
-
-    function saveCart() {
-        localStorage.setItem("hotaniCart", JSON.stringify(cart));
-        updateCartCount();
-    }
-
-    /* CART DRAWER */
-
-    const cartDrawer = document.getElementById("cart-drawer");
-
-    if (cartDrawer) {
-        cartDrawer.innerHTML = `
-            <div style="padding:25px;">
-                <button id="close-cart"
-                style="float:right;border:0;background:none;font-size:25px;">
-                    ×
-                </button>
-
-                <h2>Your Shopping Cart</h2>
-                <div id="cart-items" style="margin-top:25px;"></div>
-                <h3 id="cart-total" style="margin-top:20px;">Total: PKR 0</h3>
-                <button id="checkout-button" class="btn-primary"
-                style="margin-top:20px;width:100%;">
-                    Order on WhatsApp
-                </button>
-            </div>
-        `;
-    }
-
-    function renderCart() {
-
-        const itemsContainer = document.getElementById("cart-items");
-        const totalElement = document.getElementById("cart-total");
-
-        if (!itemsContainer || !totalElement) return;
-
-        if (cart.length === 0) {
-            itemsContainer.innerHTML = "<p>Your cart is empty.</p>";
-            totalElement.textContent = "Total: PKR 0";
-            return;
-        }
-
-        let total = 0;
-
-        itemsContainer.innerHTML = cart.map((item, index) => {
-            total += item.price * item.quantity;
-
-            return `
-                <div style="padding:12px 0;border-bottom:1px solid #ddd;">
-                    <strong>${item.name}</strong>
-                    <p>PKR ${item.price} × ${item.quantity}</p>
-
-                    <button data-remove="${index}" type="button">
-                        Remove
-                    </button>
-                </div>
-            `;
-        }).join("");
-
-        totalElement.textContent = "Total: PKR " + total;
-    }
-
-    const cartButton = document.getElementById("cart-button");
-
-    if (cartButton && cartDrawer) {
-        cartButton.addEventListener("click", function (event) {
-            event.preventDefault();
-            cartDrawer.classList.add("active");
-            renderCart();
         });
+    }
+
+    for (const file of sectionFiles) {
+        await loadSection(file);
+    }
+
+
+    /* MOBILE NAVIGATION */
+
+    document.addEventListener("click", function (event) {
+
+        const menuButton = event.target.closest(".mobile-menu-btn");
+        const navigation = document.querySelector(".navigation-links");
+
+        if (menuButton && navigation) {
+            navigation.classList.toggle("active");
+        }
+
+        const navLink = event.target.closest(".navigation-links a");
+
+        if (navLink && navigation) {
+            navigation.classList.remove("active");
+        }
+
+    });
+
+
+    /* SEARCH PRODUCTS */
+
+    function searchProducts() {
+
+        const input = document.getElementById("product-search");
+
+        if (!input) return;
+
+        const searchTerm = input.value.trim().toLowerCase();
+
+        document.querySelectorAll(".product-card").forEach(function (card) {
+
+            const productName = card.textContent.toLowerCase();
+
+            card.style.display =
+                productName.includes(searchTerm) ? "" : "none";
+
+        });
+
     }
 
     document.addEventListener("click", function (event) {
 
-        if (event.target.id === "close-cart") {
-            cartDrawer.classList.remove("active");
+        if (event.target.closest("#search-button")) {
+            searchProducts();
         }
 
-        if (event.target.dataset.remove !== undefined) {
-            cart.splice(Number(event.target.dataset.remove), 1);
-            saveCart();
-            renderCart();
-        }
     });
 
-    /* WHATSAPP CHECKOUT */
+    document.addEventListener("input", function (event) {
 
-    const checkoutButton = document.getElementById("checkout-button");
+        if (event.target.id === "product-search") {
+            searchProducts();
+        }
 
-    if (checkoutButton) {
-        checkoutButton.addEventListener("click", function () {
+    });
 
-            if (cart.length === 0) {
-                alert("Your cart is empty.");
-                return;
-            }
 
-            if (!STORE.whatsapp) {
-                alert("WhatsApp number will be added soon.");
-                return;
-            }
+    /* SHOPPING CART */
 
-            let message = "Assalam o Alaikum! I want to place an order:\n\n";
-            let total = 0;
+    let cart = [];
 
-            cart.forEach(function (item) {
-                message += `${item.name} - ${item.quantity} x PKR ${item.price}\n`;
-                total += item.price * item.quantity;
+    try {
+        cart = JSON.parse(localStorage.getItem("hotaniCart")) || [];
+    } catch (error) {
+        cart = [];
+    }
+
+    function saveCart() {
+
+        localStorage.setItem("hotaniCart", JSON.stringify(cart));
+
+        updateCartCount();
+        renderCart();
+
+    }
+
+    function updateCartCount() {
+
+        const countElement = document.getElementById("cart-count");
+
+        const totalItems = cart.reduce(function (total, item) {
+            return total + Number(item.quantity || 0);
+        }, 0);
+
+        if (countElement) {
+            countElement.textContent = totalItems;
+        }
+
+    }
+
+    function renderCart() {
+
+        const cartItems = document.getElementById("cart-items");
+        const cartTotal = document.getElementById("cart-total");
+
+        if (!cartItems || !cartTotal) return;
+
+        if (cart.length === 0) {
+
+            cartItems.innerHTML = "<p>Your cart is empty.</p>";
+            cartTotal.textContent = "Total: Rs. 0";
+
+            return;
+
+        }
+
+        let total = 0;
+
+        cartItems.innerHTML = cart.map(function (item, index) {
+
+            const itemTotal = Number(item.price) * Number(item.quantity);
+
+            total += itemTotal;
+
+            return `
+                <div class="cart-item">
+
+                    <h4>${item.name}</h4>
+
+                    <p>Rs. ${item.price}</p>
+
+                    <div class="cart-quantity">
+
+                        <button type="button"
+                            data-cart-action="decrease"
+                            data-index="${index}">−</button>
+
+                        <span>${item.quantity}</span>
+
+                        <button type="button"
+                            data-cart-action="increase"
+                            data-index="${index}">+</button>
+
+                    </div>
+
+                    <button type="button"
+                        data-cart-action="remove"
+                        data-index="${index}">
+                        Remove
+                    </button>
+
+                </div>
+            `;
+
+        }).join("");
+
+        cartTotal.textContent = "Total: Rs. " + total.toLocaleString("en-PK");
+
+    }
+
+
+    /* ADD PRODUCT TO CART */
+
+    window.HOTANI_ADD_TO_CART = function (product) {
+
+        if (!product || !product.id || !product.name) {
+            console.error("Invalid product information.");
+            return;
+        }
+
+        const existingProduct = cart.find(function (item) {
+            return item.id === product.id;
+        });
+
+        if (existingProduct) {
+
+            existingProduct.quantity += Number(product.quantity || 1);
+
+        } else {
+
+            cart.push({
+                id: product.id,
+                name: product.name,
+                price: Number(product.price),
+                quantity: Number(product.quantity || 1),
+                image: product.image || ""
             });
 
-            message += `\nTotal: PKR ${total}`;
+        }
 
-            window.open(
-                "https://wa.me/" + STORE.whatsapp +
-                "?text=" + encodeURIComponent(message),
-                "_blank"
-            );
+        saveCart();
+
+        const drawer = document.getElementById("cart-drawer");
+
+        if (drawer) {
+            drawer.classList.add("active");
+        }
+
+    };
+
+
+    /* CART BUTTON */
+
+    document.addEventListener("click", function (event) {
+
+        if (event.target.closest("#cart-button")) {
+
+            event.preventDefault();
+
+            const drawer = document.getElementById("cart-drawer");
+
+            if (drawer) {
+                drawer.classList.add("active");
+                renderCart();
+            }
+
+        }
+
+        if (event.target.closest("#close-cart")) {
+
+            const drawer = document.getElementById("cart-drawer");
+
+            if (drawer) {
+                drawer.classList.remove("active");
+            }
+
+        }
+
+    });
+
+
+    /* CART QUANTITY AND REMOVE */
+
+    document.addEventListener("click", function (event) {
+
+        const button = event.target.closest("[data-cart-action]");
+
+        if (!button) return;
+
+        const index = Number(button.dataset.index);
+        const action = button.dataset.cartAction;
+
+        if (!cart[index]) return;
+
+        if (action === "increase") {
+            cart[index].quantity++;
+        }
+
+        if (action === "decrease") {
+
+            cart[index].quantity--;
+
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+
+        }
+
+        if (action === "remove") {
+            cart.splice(index, 1);
+        }
+
+        saveCart();
+
+    });
+
+
+    /* WHATSAPP ORDER */
+
+    function sendWhatsAppOrder() {
+
+        if (cart.length === 0) {
+            alert("Your cart is empty.");
+            return;
+        }
+
+        const phone = window.HOTANI_STORE.whatsapp;
+
+        if (!phone) {
+            alert("WhatsApp number has not been added yet.");
+            return;
+        }
+
+        let message = "Assalam o Alaikum! I want to place an order:\n\n";
+
+        let total = 0;
+
+        cart.forEach(function (item) {
+
+            const itemTotal = item.price * item.quantity;
+
+            total += itemTotal;
+
+            message +=
+                item.name +
+                " | Quantity: " + item.quantity +
+                " | Price: Rs. " + itemTotal + "\n";
+
         });
+
+        message += "\nTotal: Rs. " + total;
+
+        const url =
+            "https://wa.me/" +
+            phone.replace(/\D/g, "") +
+            "?text=" +
+            encodeURIComponent(message);
+
+        window.open(url, "_blank");
+
     }
 
-    /* PRODUCT SEARCH */
+    document.addEventListener("click", function (event) {
 
-    const searchInput = document.getElementById("product-search");
-    const searchButton = document.getElementById("search-button");
+        if (event.target.closest("#checkout-button")) {
+            sendWhatsAppOrder();
+        }
 
-    function searchProducts() {
+    });
 
-        if (!searchInput) return;
 
-        const searchTerm = searchInput.value.trim().toLowerCase();
+    /* CLOSE CART WITH ESCAPE */
 
-        document.querySelectorAll(".product-card").forEach(function (card) {
-            const productName = card.textContent.toLowerCase();
+    document.addEventListener("keydown", function (event) {
 
-            card.style.display = productName.includes(searchTerm)
-                ? ""
-                : "none";
-        });
-    }
+        if (event.key === "Escape") {
 
-    if (searchButton) {
-        searchButton.addEventListener("click", searchProducts);
-    }
+            const drawer = document.getElementById("cart-drawer");
 
-    if (searchInput) {
-        searchInput.addEventListener("input", searchProducts);
-    }
+            if (drawer) {
+                drawer.classList.remove("active");
+            }
 
-    /* INITIALIZE */
+        }
+
+    });
+
+
+    /* INITIALIZE CART */
 
     updateCartCount();
+    renderCart();
+
+
+    /* STORE READY */
+
+    console.log("HOTANI ACRYLIC STORE initialized successfully.");
 
 });
