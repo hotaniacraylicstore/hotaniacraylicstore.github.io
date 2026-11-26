@@ -1,1 +1,165 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Products | HOTANI ACRYLIC STORE</title>
+    <meta name="description" content="Search acrylic products at HOTANI ACRYLIC STORE.">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <div id="announcement-bar">
+        Welcome to HOTANI ACRYLIC STORE
+    </div>
+
+    <header style="padding:20px 4%;border-bottom:1px solid #eee;">
+        <a href="../index.html" style="font-size:22px;font-weight:bold;">
+            HOTANI ACRYLIC STORE
+        </a>
+        <a href="../index.html" style="float:right;">Home</a>
+    </header>
+
+    <nav style="padding:15px 4%;background:#f7f7f7;">
+        <a href="../index.html">Home</a> / Search
+    </nav>
+
+    <main style="padding:50px 4%;">
+
+        <div class="section-heading">
+            <h2>Search Products</h2>
+            <p>Find your favourite products at HOTANI ACRYLIC STORE.</p>
+        </div>
+
+        <form id="search-form" style="display:flex;gap:10px;max-width:650px;margin:30px auto;">
+            <input
+                type="search"
+                id="search-input"
+                placeholder="Search products..."
+                style="flex:1;min-width:0;padding:14px;border:1px solid #ddd;border-radius:4px;"
+            >
+
+            <button
+                type="submit"
+                style="padding:14px 25px;background:#222;color:white;border:0;border-radius:4px;cursor:pointer;"
+            >
+                Search
+            </button>
+        </form>
+
+        <p id="search-message" style="text-align:center;margin:25px 0;"></p>
+
+        <div id="search-results" class="product-grid">
+            <p>Loading products...</p>
+        </div>
+
+    </main>
+
+    <footer style="background:#222;color:white;padding:25px;text-align:center;">
+        © 2026 HOTANI ACRYLIC STORE. All Rights Reserved.
+    </footer>
+
+    <script src="../data/products.js"></script>
+
+    <script>
+        const form = document.getElementById("search-form");
+        const input = document.getElementById("search-input");
+        const results = document.getElementById("search-results");
+        const message = document.getElementById("search-message");
+
+        function formatPrice(price) {
+            return "Rs. " + Number(price).toLocaleString("en-PK");
+        }
+
+        function searchProducts() {
+            const query = input.value.trim().toLowerCase();
+
+            const allProducts = window.HOTANI_GET_PRODUCTS
+                ? window.HOTANI_GET_PRODUCTS()
+                : [];
+
+            const matchedProducts = allProducts.filter(product => {
+                const name = String(product.name || "").toLowerCase();
+                const description = String(product.description || "").toLowerCase();
+                const category = String(product.category || "").toLowerCase();
+
+                return (
+                    name.includes(query) ||
+                    description.includes(query) ||
+                    category.includes(query)
+                );
+            });
+
+            if (!query) {
+                message.textContent = "Please enter a product name to search.";
+                results.innerHTML = "";
+                return;
+            }
+
+            if (matchedProducts.length === 0) {
+                message.textContent = "No products found for: " + input.value;
+                results.innerHTML = "";
+                return;
+            }
+
+            message.textContent =
+                matchedProducts.length + " product(s) found.";
+
+            results.innerHTML = matchedProducts.map(product => {
+                const price = Number(product.offerPrice) > 0
+                    ? product.offerPrice
+                    : product.price;
+
+                return `
+                    <div class="product-card">
+                        <img
+                            src="../${product.image}"
+                            alt="${product.name}"
+                            loading="lazy"
+                        >
+
+                        <div class="product-card-content">
+                            <h3>${product.name}</h3>
+
+                            <div class="product-price">
+                                ${
+                                    Number(product.offerPrice) > 0
+                                    ? `<span class="old-price">${formatPrice(product.price)}</span>`
+                                    : ""
+                                }
+
+                                <span class="sale-price">
+                                    ${formatPrice(price)}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            searchProducts();
+
+            const url = new URL(window.location.href);
+            url.searchParams.set("q", input.value.trim());
+            window.history.replaceState({}, "", url);
+        });
+
+        const params = new URLSearchParams(window.location.search);
+        const initialQuery = params.get("q");
+
+        if (initialQuery) {
+            input.value = initialQuery;
+            searchProducts();
+        } else {
+            results.innerHTML = "";
+            message.textContent = "Enter a product name above to get started.";
+        }
+    </script>
+
+</body>
+</html>
+
