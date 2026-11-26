@@ -6,18 +6,19 @@
 
 window.HOTANI_STORE = {
     name: "HOTANI ACRYLIC STORE",
-    whatsapp: "", // WhatsApp number baad mein add karenge
+    whatsapp: "",
     currency: "PKR"
 };
 
 
 /* ==========================================
-   LOAD ALL WEBSITE SECTIONS
+   LOAD WEBSITE SECTIONS
 ========================================== */
 
 const sectionFiles = [
     "sections/announcement.js",
     "sections/header.js",
+    "sections/cart.js",
     "sections/navigation.js",
     "sections/hero-slider.js",
     "sections/benefits.js",
@@ -35,6 +36,11 @@ const sectionFiles = [
     "sections/footer.js"
 ];
 
+
+/* ==========================================
+   LOAD FILES ONE BY ONE
+========================================== */
+
 function loadSectionFiles(index = 0) {
     if (index >= sectionFiles.length) {
         initializeStore();
@@ -50,7 +56,7 @@ function loadSectionFiles(index = 0) {
     };
 
     script.onerror = function () {
-        console.error("Section could not load:", sectionFiles[index]);
+        console.error("Section failed to load:", sectionFiles[index]);
         loadSectionFiles(index + 1);
     };
 
@@ -93,7 +99,7 @@ function initializeMobileMenu() {
 
 
 /* ==========================================
-   PRODUCT SEARCH
+   SEARCH
 ========================================== */
 
 function initializeSearch() {
@@ -151,7 +157,7 @@ function saveCartData() {
 
 
 /* ==========================================
-   ADD PRODUCT TO CART
+   ADD TO CART
 ========================================== */
 
 window.HOTANI_ADD_TO_CART = function (product) {
@@ -188,7 +194,7 @@ window.HOTANI_ADD_TO_CART = function (product) {
 
 
 /* ==========================================
-   REMOVE PRODUCT FROM CART
+   REMOVE FROM CART
 ========================================== */
 
 window.HOTANI_REMOVE_FROM_CART = function (productId) {
@@ -202,7 +208,7 @@ window.HOTANI_REMOVE_FROM_CART = function (productId) {
 
 
 /* ==========================================
-   CHANGE CART QUANTITY
+   CHANGE QUANTITY
 ========================================== */
 
 window.HOTANI_CHANGE_QUANTITY = function (productId, change) {
@@ -248,57 +254,59 @@ function updateCartDisplay() {
     }
 
     if (cartTotal) {
-        cartTotal.textContent = "Rs. " + totalPrice.toLocaleString("en-PK");
+        cartTotal.textContent =
+            "Rs. " + totalPrice.toLocaleString("en-PK");
     }
 
-    if (cartItems) {
-        if (storeCart.length === 0) {
-            cartItems.innerHTML = `
-                <p class="empty-cart">
-                    Your cart is currently empty.
+    if (!cartItems) return;
+
+    if (storeCart.length === 0) {
+        cartItems.innerHTML = `
+            <p class="empty-cart">
+                Your cart is currently empty.
+            </p>
+        `;
+        return;
+    }
+
+    cartItems.innerHTML = storeCart.map(item => `
+        <div class="cart-item">
+            <img
+                src="${escapeHTML(item.image)}"
+                alt="${escapeHTML(item.name)}"
+            >
+
+            <div class="cart-item-details">
+                <h4>${escapeHTML(item.name)}</h4>
+
+                <p>
+                    Rs. ${item.price.toLocaleString("en-PK")}
                 </p>
-            `;
-        } else {
-            cartItems.innerHTML = storeCart.map(item => `
-                <div class="cart-item">
-                    <img
-                        src="${escapeHTML(item.image)}"
-                        alt="${escapeHTML(item.name)}"
-                    >
 
-                    <div class="cart-item-details">
-                        <h4>${escapeHTML(item.name)}</h4>
+                <div class="cart-quantity">
+                    <button
+                        onclick="HOTANI_CHANGE_QUANTITY('${escapeHTML(item.id)}', -1)"
+                    >−</button>
 
-                        <p>
-                            Rs. ${item.price.toLocaleString("en-PK")}
-                        </p>
-
-                        <div class="cart-quantity">
-                            <button
-                                onclick="HOTANI_CHANGE_QUANTITY('${escapeHTML(item.id)}', -1)"
-                            >−</button>
-
-                            <span>${item.quantity}</span>
-
-                            <button
-                                onclick="HOTANI_CHANGE_QUANTITY('${escapeHTML(item.id)}', 1)"
-                            >+</button>
-                        </div>
-                    </div>
+                    <span>${item.quantity}</span>
 
                     <button
-                        class="remove-cart-item"
-                        onclick="HOTANI_REMOVE_FROM_CART('${escapeHTML(item.id)}')"
-                    >×</button>
+                        onclick="HOTANI_CHANGE_QUANTITY('${escapeHTML(item.id)}', 1)"
+                    >+</button>
                 </div>
-            `).join("");
-        }
-    }
+            </div>
+
+            <button
+                class="remove-cart-item"
+                onclick="HOTANI_REMOVE_FROM_CART('${escapeHTML(item.id)}')"
+            >×</button>
+        </div>
+    `).join("");
 }
 
 
 /* ==========================================
-   HTML TEXT SAFETY
+   HTML SAFETY
 ========================================== */
 
 function escapeHTML(value) {
@@ -339,21 +347,27 @@ function initializeCart() {
     updateCartDisplay();
 
     const cartButton = document.getElementById("open-cart");
+    const drawer = document.getElementById("cart-drawer");
     const checkoutButton = document.getElementById("checkout-button");
 
     if (cartButton) {
         cartButton.addEventListener("click", openCartDrawer);
     }
 
+    if (drawer) {
+        drawer.addEventListener("click", function (event) {
+            if (
+                event.target.closest("#close-cart") ||
+                event.target.classList.contains("cart-overlay")
+            ) {
+                closeCartDrawer();
+            }
+        });
+    }
+
     if (checkoutButton) {
         checkoutButton.addEventListener("click", checkoutOnWhatsApp);
     }
-
-    document.addEventListener("click", function (event) {
-        if (event.target.closest("#close-cart")) {
-            closeCartDrawer();
-        }
-    });
 }
 
 
@@ -374,7 +388,8 @@ function checkoutOnWhatsApp() {
         return;
     }
 
-    let message = "Assalam-o-Alaikum! I want to place an order:\n\n";
+    let message =
+        "Assalam-o-Alaikum! I want to place an order:\n\n";
 
     storeCart.forEach((item, index) => {
         message +=
@@ -391,8 +406,10 @@ function checkoutOnWhatsApp() {
     message += `Total: Rs. ${total}\n\nPlease confirm my order.`;
 
     const whatsappURL =
-        "https://wa.me/" + phone.replace(/\D/g, "") +
-        "?text=" + encodeURIComponent(message);
+        "https://wa.me/" +
+        phone.replace(/\D/g, "") +
+        "?text=" +
+        encodeURIComponent(message);
 
     window.open(whatsappURL, "_blank");
 }
