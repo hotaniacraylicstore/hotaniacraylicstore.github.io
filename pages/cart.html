@@ -1,1 +1,274 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | HOTANI ACRYLIC STORE</title>
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        .cart-page {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .cart-row {
+            display: grid;
+            grid-template-columns: 90px 1fr auto auto auto;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-row img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .cart-row h3 {
+            margin: 0 0 8px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .quantity-controls button,
+        .remove-button {
+            padding: 7px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+        }
+
+        .remove-button {
+            color: #b00020;
+        }
+
+        .cart-summary {
+            max-width: 400px;
+            margin: 35px 0 0 auto;
+            padding: 25px;
+            background: #f7f7f7;
+        }
+
+        .cart-total {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .checkout-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #222;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .continue-shopping {
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        @media(max-width:650px) {
+            .cart-row {
+                grid-template-columns: 65px 1fr;
+                gap: 12px;
+            }
+
+            .cart-row img {
+                width: 65px;
+                height: 65px;
+            }
+
+            .quantity-controls,
+            .remove-button,
+            .item-subtotal {
+                grid-column: 2;
+                justify-self: start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="announcement-bar">
+        Welcome to HOTANI ACRYLIC STORE
+    </div>
+
+    <header style="padding:20px 4%;border-bottom:1px solid #eee;">
+        <a href="../index.html" style="font-size:22px;font-weight:bold;">
+            HOTANI ACRYLIC STORE
+        </a>
+        <a href="../index.html" style="float:right;">Home</a>
+    </header>
+
+    <nav style="padding:15px 4%;background:#f7f7f7;">
+        <a href="../index.html">Home</a> / Shopping Cart
+    </nav>
+
+    <main class="cart-page">
+
+        <h1>Shopping Cart</h1>
+
+        <div id="cart-products">
+            Loading cart...
+        </div>
+
+        <div id="cart-summary" class="cart-summary" style="display:none;">
+            <h2>Order Summary</h2>
+
+            <p id="total-items"></p>
+
+            <div class="cart-total" id="cart-total">
+                Rs. 0
+            </div>
+
+            <button class="checkout-button" onclick="checkout()">
+                Proceed to Checkout
+            </button>
+        </div>
+
+        <a class="continue-shopping" href="../index.html">
+            ← Continue Shopping
+        </a>
+
+    </main>
+
+    <footer style="background:#222;color:white;padding:25px;text-align:center;">
+        © 2026 HOTANI ACRYLIC STORE. All Rights Reserved.
+    </footer>
+
+    <script>
+        let cart = [];
+
+        try {
+            cart = JSON.parse(localStorage.getItem("hotani_cart")) || [];
+        } catch (error) {
+            cart = [];
+        }
+
+        const cartProducts = document.getElementById("cart-products");
+        const cartSummary = document.getElementById("cart-summary");
+
+        function saveCart() {
+            localStorage.setItem("hotani_cart", JSON.stringify(cart));
+            renderCart();
+        }
+
+        function formatPrice(price) {
+            return "Rs. " + Number(price).toLocaleString("en-PK");
+        }
+
+        function changeQuantity(id, change) {
+            const item = cart.find(product => product.id === id);
+
+            if (!item) return;
+
+            item.quantity += change;
+
+            if (item.quantity <= 0) {
+                removeItem(id);
+                return;
+            }
+
+            saveCart();
+        }
+
+        function removeItem(id) {
+            cart = cart.filter(product => product.id !== id);
+            saveCart();
+        }
+
+        function renderCart() {
+            if (cart.length === 0) {
+                cartProducts.innerHTML = `
+                    <div style="text-align:center;padding:50px 15px;">
+                        <h2>Your cart is empty</h2>
+                        <p>You have not added any products yet.</p>
+                        <a href="../index.html">Start Shopping</a>
+                    </div>
+                `;
+
+                cartSummary.style.display = "none";
+                return;
+            }
+
+            cartSummary.style.display = "block";
+
+            cartProducts.innerHTML = cart.map(item => `
+                <div class="cart-row">
+
+                    <img src="../${item.image || ""}" alt="${item.name}">
+
+                    <div>
+                        <h3>${escapeHTML(item.name)}</h3>
+                        <p>${formatPrice(item.price)} each</p>
+                    </div>
+
+                    <div class="quantity-controls">
+                        <button onclick="changeQuantity('${escapeHTML(item.id)}', -1)">−</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="changeQuantity('${escapeHTML(item.id)}', 1)">+</button>
+                    </div>
+
+                    <strong class="item-subtotal">
+                        ${formatPrice(item.price * item.quantity)}
+                    </strong>
+
+                    <button class="remove-button" onclick="removeItem('${escapeHTML(item.id)}')">
+                        Remove
+                    </button>
+
+                </div>
+            `).join("");
+
+            const total = cart.reduce(
+                (sum, item) => sum + Number(item.price) * Number(item.quantity),
+                0
+            );
+
+            const quantity = cart.reduce(
+                (sum, item) => sum + Number(item.quantity),
+                0
+            );
+
+            document.getElementById("total-items").textContent =
+                "Total Items: " + quantity;
+
+            document.getElementById("cart-total").textContent =
+                formatPrice(total);
+        }
+
+        function escapeHTML(value) {
+            return String(value).replace(/[&<>"']/g, char => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;"
+            })[char]);
+        }
+
+        function checkout() {
+            window.location.href = "checkout.html";
+        }
+
+        renderCart();
+    </script>
+
+</body>
+</html>
+
