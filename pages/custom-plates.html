@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Name & Number Plates | HOTANI ACRYLIC STORE</title>
+    <meta name="description" content="Create personalized custom name and number plates at HOTANI ACRYLIC STORE.">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <div id="announcement-bar">
+        Welcome to HOTANI ACRYLIC STORE
+    </div>
+
+    <header style="padding:20px 4%;border-bottom:1px solid #eee;">
+        <a href="../index.html" style="font-size:22px;font-weight:bold;">
+            HOTANI ACRYLIC STORE
+        </a>
+        <a href="../index.html" style="float:right;">Home</a>
+    </header>
+
+    <nav style="padding:15px 4%;background:#f7f7f7;">
+        <a href="../index.html">Home</a> / Custom Name & Number Plates
+    </nav>
+
+    <main style="padding:50px 4%;">
+
+        <div class="section-heading">
+            <h2>Custom Name & Number Plates</h2>
+            <p>
+                Personalized acrylic name and number plates,
+                designed according to your choice.
+            </p>
+        </div>
+
+        <div id="category-products" class="product-grid">
+            <p>Loading products...</p>
+        </div>
+
+    </main>
+
+    <footer style="background:#222;color:white;padding:25px;text-align:center;">
+        © 2026 HOTANI ACRYLIC STORE. All Rights Reserved.
+    </footer>
+
+    <script src="../data/products.js"></script>
+
+    <script>
+        const container = document.getElementById("category-products");
+
+        const products = window.HOTANI_GET_PRODUCTS_BY_CATEGORY
+            ? window.HOTANI_GET_PRODUCTS_BY_CATEGORY("custom-plates")
+            : [];
+
+        function formatPrice(price) {
+            return "Rs. " + Number(price).toLocaleString("en-PK");
+        }
+
+        if (products.length === 0) {
+            container.innerHTML = `
+                <p style="grid-column:1/-1;text-align:center;padding:40px;">
+                    New products coming soon.
+                </p>
+            `;
+        } else {
+            container.innerHTML = products.map(product => {
+                const price = Number(product.offerPrice) > 0
+                    ? product.offerPrice
+                    : product.price;
+
+                return `
+                    <div class="product-card">
+                        <img
+                            src="../${product.image}"
+                            alt="${product.name}"
+                            loading="lazy"
+                        >
+
+                        <div class="product-card-content">
+                            <h3>${product.name}</h3>
+
+                            <div class="product-price">
+                                ${
+                                    Number(product.offerPrice) > 0
+                                    ? `<span class="old-price">${formatPrice(product.price)}</span>`
+                                    : ""
+                                }
+
+                                <span class="sale-price">
+                                    ${formatPrice(price)}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+    </script>
+
+</body>
+</html>
