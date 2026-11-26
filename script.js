@@ -12,12 +12,15 @@ window.HOTANI_STORE = {
 
 
 /* ==========================================
-   LOAD WEBSITE SECTIONS
+   LOAD WEBSITE FILES
 ========================================== */
 
 const sectionFiles = [
+
+    // PRODUCT DATA - LOAD FIRST
     "data/products.js",
 
+    // WEBSITE SECTIONS
     "sections/announcement.js",
     "sections/header.js",
     "sections/cart.js",
@@ -35,7 +38,11 @@ const sectionFiles = [
     "sections/why-choose-us.js",
     "sections/video-showcase.js",
     "sections/newsletter.js",
-    "sections/footer.js"
+    "sections/footer.js",
+
+    // PRODUCT DISPLAY - LOAD LAST
+    "products/render-products.js"
+
 ];
 
 
@@ -59,7 +66,11 @@ function loadSectionFiles(index = 0) {
     };
 
     script.onerror = function () {
-        console.error("Section failed to load:", sectionFiles[index]);
+        console.error(
+            "File failed to load:",
+            sectionFiles[index]
+        );
+
         loadSectionFiles(index + 1);
     };
 
@@ -72,10 +83,15 @@ function loadSectionFiles(index = 0) {
 ========================================== */
 
 function initializeStore() {
+
     initializeMobileMenu();
+
     initializeSearch();
+
     initializeCart();
+
     initializeNewsletter();
+
 }
 
 
@@ -85,22 +101,30 @@ function initializeStore() {
 
 function initializeMobileMenu() {
 
-    const menuButton = document.getElementById("mobile-menu-btn");
-    const navigation = document.getElementById("main-navigation");
+    const menuButton =
+        document.getElementById("mobile-menu-btn");
+
+    const navigation =
+        document.getElementById("main-navigation");
 
     if (!menuButton || !navigation) return;
 
     menuButton.addEventListener("click", function () {
+
         navigation.classList.toggle("mobile-menu-open");
+
     });
 
     navigation.querySelectorAll("a").forEach(link => {
 
         link.addEventListener("click", function () {
+
             navigation.classList.remove("mobile-menu-open");
+
         });
 
     });
+
 }
 
 
@@ -110,8 +134,11 @@ function initializeMobileMenu() {
 
 function initializeSearch() {
 
-    const searchInput = document.getElementById("store-search");
-    const searchButton = document.getElementById("search-button");
+    const searchInput =
+        document.getElementById("store-search");
+
+    const searchButton =
+        document.getElementById("search-button");
 
     if (!searchInput) return;
 
@@ -120,25 +147,38 @@ function initializeSearch() {
         const query = searchInput.value.trim();
 
         if (!query) {
+
             searchInput.focus();
+
             return;
+
         }
 
         window.location.href =
-            "pages/search.html?q=" + encodeURIComponent(query);
+            "pages/search.html?q=" +
+            encodeURIComponent(query);
+
     }
 
     if (searchButton) {
-        searchButton.addEventListener("click", searchProducts);
+
+        searchButton.addEventListener(
+            "click",
+            searchProducts
+        );
+
     }
 
     searchInput.addEventListener("keydown", function (event) {
 
         if (event.key === "Enter") {
+
             searchProducts();
+
         }
 
     });
+
 }
 
 
@@ -147,6 +187,7 @@ function initializeSearch() {
 ========================================== */
 
 let storeCart = [];
+
 
 function loadCartData() {
 
@@ -161,7 +202,9 @@ function loadCartData() {
         storeCart = [];
 
     }
+
 }
+
 
 function saveCartData() {
 
@@ -180,8 +223,11 @@ function saveCartData() {
 window.HOTANI_ADD_TO_CART = function (product) {
 
     if (!product || !product.id) {
+
         console.error("Invalid product information.");
+
         return;
+
     }
 
     const quantity = Math.max(
@@ -200,17 +246,25 @@ window.HOTANI_ADD_TO_CART = function (product) {
     } else {
 
         storeCart.push({
+
             id: product.id,
+
             name: product.name || "Product",
+
             price: Number(product.price) || 0,
+
             quantity: quantity,
+
             image: product.image || ""
+
         });
 
     }
 
     saveCartData();
+
     updateCartDisplay();
+
     openCartDrawer();
 
 };
@@ -227,6 +281,7 @@ window.HOTANI_REMOVE_FROM_CART = function (productId) {
     );
 
     saveCartData();
+
     updateCartDisplay();
 
 };
@@ -236,7 +291,10 @@ window.HOTANI_REMOVE_FROM_CART = function (productId) {
    CHANGE QUANTITY
 ========================================== */
 
-window.HOTANI_CHANGE_QUANTITY = function (productId, change) {
+window.HOTANI_CHANGE_QUANTITY = function (
+    productId,
+    change
+) {
 
     const product = storeCart.find(
         item => item.id === productId
@@ -247,11 +305,15 @@ window.HOTANI_CHANGE_QUANTITY = function (productId, change) {
     product.quantity += Number(change);
 
     if (product.quantity <= 0) {
+
         window.HOTANI_REMOVE_FROM_CART(productId);
+
         return;
+
     }
 
     saveCartData();
+
     updateCartDisplay();
 
 };
@@ -263,30 +325,46 @@ window.HOTANI_CHANGE_QUANTITY = function (productId, change) {
 
 function updateCartDisplay() {
 
-    const cartCount = document.getElementById("cart-count");
-    const cartItems = document.getElementById("cart-items");
-    const cartTotal = document.getElementById("cart-total");
+    const cartCount =
+        document.getElementById("cart-count");
+
+    const cartItems =
+        document.getElementById("cart-items");
+
+    const cartTotal =
+        document.getElementById("cart-total");
+
 
     const totalQuantity = storeCart.reduce(
         (total, item) => total + item.quantity,
         0
     );
 
+
     const totalPrice = storeCart.reduce(
         (total, item) => total + item.price * item.quantity,
         0
     );
 
+
     if (cartCount) {
+
         cartCount.textContent = totalQuantity;
+
     }
+
 
     if (cartTotal) {
+
         cartTotal.textContent =
-            "Rs. " + totalPrice.toLocaleString("en-PK");
+            "Rs. " +
+            totalPrice.toLocaleString("en-PK");
+
     }
 
+
     if (!cartItems) return;
+
 
     if (storeCart.length === 0) {
 
@@ -297,7 +375,9 @@ function updateCartDisplay() {
         `;
 
         return;
+
     }
+
 
     cartItems.innerHTML = storeCart.map(item => `
 
@@ -320,13 +400,17 @@ function updateCartDisplay() {
 
                     <button
                         onclick="HOTANI_CHANGE_QUANTITY('${escapeHTML(item.id)}', -1)"
-                    >−</button>
+                    >
+                        −
+                    </button>
 
                     <span>${item.quantity}</span>
 
                     <button
                         onclick="HOTANI_CHANGE_QUANTITY('${escapeHTML(item.id)}', 1)"
-                    >+</button>
+                    >
+                        +
+                    </button>
 
                 </div>
 
@@ -335,7 +419,9 @@ function updateCartDisplay() {
             <button
                 class="remove-cart-item"
                 onclick="HOTANI_REMOVE_FROM_CART('${escapeHTML(item.id)}')"
-            >×</button>
+            >
+                ×
+            </button>
 
         </div>
 
@@ -353,11 +439,17 @@ function escapeHTML(value) {
     return String(value).replace(/[&<>"']/g, function (char) {
 
         return {
+
             "&": "&amp;",
+
             "<": "&lt;",
+
             ">": "&gt;",
+
             '"': "&quot;",
+
             "'": "&#039;"
+
         }[char];
 
     });
@@ -371,44 +463,73 @@ function escapeHTML(value) {
 
 function openCartDrawer() {
 
-    const drawer = document.getElementById("cart-drawer");
+    const drawer =
+        document.getElementById("cart-drawer");
 
     if (drawer) {
+
         drawer.classList.add("cart-open");
+
     }
 
 }
+
 
 function closeCartDrawer() {
 
-    const drawer = document.getElementById("cart-drawer");
+    const drawer =
+        document.getElementById("cart-drawer");
 
     if (drawer) {
+
         drawer.classList.remove("cart-open");
+
     }
 
 }
+
+
+/* ==========================================
+   INITIALIZE CART
+========================================== */
 
 function initializeCart() {
 
     loadCartData();
+
     updateCartDisplay();
 
-    const cartButton = document.getElementById("open-cart");
-    const drawer = document.getElementById("cart-drawer");
-    const checkoutButton = document.getElementById("checkout-button");
+
+    const cartButton =
+        document.getElementById("open-cart");
+
+    const drawer =
+        document.getElementById("cart-drawer");
+
+    const checkoutButton =
+        document.getElementById("checkout-button");
+
 
     if (cartButton) {
-        cartButton.addEventListener("click", openCartDrawer);
+
+        cartButton.addEventListener(
+            "click",
+            openCartDrawer
+        );
+
     }
+
 
     if (drawer) {
 
         drawer.addEventListener("click", function (event) {
 
             if (
+
                 event.target.closest("#close-cart") ||
+
                 event.target.classList.contains("cart-overlay")
+
             ) {
 
                 closeCartDrawer();
@@ -419,8 +540,14 @@ function initializeCart() {
 
     }
 
+
     if (checkoutButton) {
-        checkoutButton.addEventListener("click", checkoutOnWhatsApp);
+
+        checkoutButton.addEventListener(
+            "click",
+            checkoutOnWhatsApp
+        );
+
     }
 
 }
@@ -433,41 +560,63 @@ function initializeCart() {
 function checkoutOnWhatsApp() {
 
     if (storeCart.length === 0) {
+
         alert("Your cart is empty.");
+
         return;
+
     }
+
 
     const phone = window.HOTANI_STORE.whatsapp;
 
+
     if (!phone) {
+
         alert("WhatsApp number will be added soon.");
+
         return;
+
     }
+
 
     let message =
         "Assalam-o-Alaikum! I want to place an order:\n\n";
 
+
     storeCart.forEach((item, index) => {
 
         message +=
+
             `${index + 1}. ${item.name}\n` +
+
             `Quantity: ${item.quantity}\n` +
+
             `Price: Rs. ${item.price * item.quantity}\n\n`;
 
     });
+
 
     const total = storeCart.reduce(
         (sum, item) => sum + item.price * item.quantity,
         0
     );
 
-    message += `Total: Rs. ${total}\n\nPlease confirm my order.`;
+
+    message +=
+        `Total: Rs. ${total}\n\nPlease confirm my order.`;
+
 
     const whatsappURL =
+
         "https://wa.me/" +
+
         phone.replace(/\D/g, "") +
+
         "?text=" +
+
         encodeURIComponent(message);
+
 
     window.open(whatsappURL, "_blank");
 
@@ -480,7 +629,8 @@ function checkoutOnWhatsApp() {
 
 function initializeNewsletter() {
 
-    const form = document.getElementById("newsletter-form");
+    const form =
+        document.getElementById("newsletter-form");
 
     if (!form) return;
 
@@ -498,5 +648,7 @@ function initializeNewsletter() {
 ========================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
+
     loadSectionFiles();
+
 });
