@@ -1,8 +1,8 @@
 
-/* =================================
+/* ==========================================
    HOTANI ACRYLIC STORE
-   Premium Ecommerce Theme
-================================= */
+   Premium Ecommerce Website
+========================================== */
 
 :root {
     --black: #090909;
@@ -12,9 +12,10 @@
     --light-gold: #E5CA83;
     --ivory: #F5F1E8;
     --white: #FFFFFF;
-    --text: #333333;
+    --text: #292929;
     --muted: #888888;
     --border: rgba(198,160,74,0.25);
+    --shadow: 0 5px 25px rgba(0,0,0,0.12);
 }
 
 * {
@@ -29,10 +30,10 @@ html {
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: var(--black);
-    color: var(--ivory);
-    line-height: 1.6;
+    background: var(--ivory);
+    color: var(--text);
     overflow-x: hidden;
+    line-height: 1.6;
 }
 
 a {
@@ -40,8 +41,7 @@ a {
     color: inherit;
 }
 
-button,
-input {
+button, input, select {
     font: inherit;
 }
 
@@ -59,17 +59,47 @@ section {
     position: relative;
 }
 
+.container {
+    width: 92%;
+    max-width: 1450px;
+    margin: auto;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.section-heading h2 {
+    font-size: 32px;
+    color: var(--black);
+    font-weight: 700;
+}
+
+.section-heading p {
+    color: var(--muted);
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.gold-line {
+    width: 65px;
+    height: 3px;
+    background: var(--gold);
+    margin: 12px auto;
+}
+
 /* ANNOUNCEMENT BAR */
 
 #announcement-bar {
-    width: 100%;
-    min-height: 35px;
+    min-height: 36px;
     background: var(--burgundy);
     color: var(--ivory);
-    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    padding: 7px 15px;
     font-size: 12px;
     letter-spacing: 1px;
 }
@@ -77,18 +107,105 @@ section {
 /* HEADER */
 
 #site-header {
-    width: 100%;
-    min-height: 85px;
     background: var(--black);
+    color: var(--ivory);
     border-bottom: 1px solid var(--border);
+}
+
+.header-container {
+    max-width: 1450px;
+    min-height: 90px;
+    padding: 12px 4%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.store-logo img {
+    width: 180px;
+    height: 65px;
+    object-fit: contain;
+}
+
+.header-search {
+    width: 45%;
+    height: 43px;
+    display: flex;
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.header-search input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    padding: 0 15px;
+    background: #191919;
+    color: white;
+}
+
+.header-search button {
+    width: 50px;
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    font-size: 22px;
+}
+
+.header-icons {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    font-size: 22px;
+}
+
+.header-icons a:hover {
+    color: var(--gold);
 }
 
 /* NAVIGATION */
 
 #main-navigation {
-    width: 100%;
+    position: relative;
+    z-index: 100;
     background: var(--dark);
+    color: var(--ivory);
+    min-height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-bottom: 1px solid var(--border);
+}
+
+.navigation-links {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 35px;
+}
+
+.navigation-links a {
+    display: block;
+    padding: 13px 0;
+    font-size: 13px;
+    transition: 0.3s;
+}
+
+.navigation-links a:hover {
+    color: var(--gold);
+}
+
+.mobile-menu-btn {
+    display: none;
+    border: none;
+    background: transparent;
+    color: var(--gold);
+    font-size: 25px;
 }
 
 /* HERO BANNER */
@@ -103,48 +220,85 @@ section {
     background-repeat: no-repeat;
 }
 
-/* CATEGORY SECTION */
+/* SHOPPING BENEFITS */
+
+#shopping-benefits {
+    background: var(--ivory);
+    padding: 25px 4%;
+    border-bottom: 1px solid #e5dfd2;
+}
+
+/* SHOP BY CATEGORY */
 
 #shop-by-category {
-    padding: 65px 5%;
-    background: var(--black);
+    padding: 65px 4%;
+    background: var(--ivory);
 }
 
 /* FEATURED COLLECTION */
 
 #featured-collection {
-    padding: 65px 5%;
-    background: var(--ivory);
-    color: var(--black);
+    padding: 65px 4%;
+    background: #ffffff;
 }
 
-/* PRODUCT COLLECTIONS */
+/* ISLAMIC ART */
 
-#product-collections {
-    padding: 65px 5%;
-    background: var(--black);
+#islamic-art-collection {
+    padding: 65px 4%;
+    background: var(--ivory);
+}
+
+/* WALL ART */
+
+#wall-art-collection {
+    padding: 65px 4%;
+    background: #ffffff;
+}
+
+/* HOME DECOR */
+
+#home-decor-collection {
+    padding: 65px 4%;
+    background: var(--ivory);
 }
 
 /* CUSTOM DESIGN */
 
 #custom-design {
-    padding: 70px 5%;
+    padding: 75px 5%;
     background: var(--burgundy);
+    color: var(--ivory);
+    text-align: center;
+}
+
+/* ALL PRODUCTS */
+
+#product-collections {
+    padding: 65px 4%;
+    background: #ffffff;
 }
 
 /* BRAND STORY */
 
 #brand-story {
-    padding: 70px 5%;
-    background: var(--dark);
+    padding: 75px 5%;
+    background: var(--black);
+    color: var(--ivory);
 }
 
 /* CUSTOMER REVIEWS */
 
 #customer-reviews {
-    padding: 65px 5%;
+    padding: 65px 4%;
     background: var(--ivory);
-    color: var(--black);
+}
+
+/* VIDEO SHOWCASE */
+
+#video-showcase {
+    padding: 65px 4%;
+    background: #ffffff;
 }
 
 /* NEWSLETTER */
@@ -152,193 +306,146 @@ section {
 #newsletter {
     padding: 55px 5%;
     background: var(--burgundy);
+    color: var(--ivory);
     text-align: center;
 }
 
 /* FOOTER */
 
 #site-footer {
-    padding: 60px 5% 25px;
     background: #050505;
     color: var(--ivory);
+    padding: 60px 5% 25px;
     border-top: 1px solid var(--border);
 }
 
-/* COMMON CONTAINER */
+/* CART DRAWER */
 
-.container {
+#cart-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 420px;
+    max-width: 90%;
+    background: var(--ivory);
+    color: var(--black);
+    z-index: 1000;
+    box-shadow: var(--shadow);
+    display: none;
+}
+
+#cart-drawer.active {
+    display: block;
+}
+
+/* PRODUCT CARDS */
+
+.product-card {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.product-card img {
     width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+.product-card h3 {
+    font-size: 15px;
+    padding: 12px 12px 5px;
+}
+
+.product-card .price {
+    padding: 0 12px 15px;
+    color: var(--burgundy);
+    font-weight: bold;
+}
+
+/* BUTTONS */
+
+.btn-primary {
+    display: inline-block;
+    padding: 12px 28px;
+    background: var(--gold);
+    color: var(--black);
+    border: 1px solid var(--gold);
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background: var(--light-gold);
+}
+
+.btn-outline {
+    display: inline-block;
+    padding: 11px 27px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    transition: 0.3s;
+}
+
+.btn-outline:hover {
+    background: var(--gold);
+    color: var(--black);
 }
 
 /* RESPONSIVE DESIGN */
+
+@media (max-width: 900px) {
+
+    .navigation-links {
+        gap: 18px;
+    }
+
+    .navigation-links a {
+        font-size: 12px;
+    }
+
+    .header-container {
+        gap: 15px;
+    }
+
+    .store-logo img {
+        width: 140px;
+    }
+
+}
 
 @media (max-width: 768px) {
 
     #announcement-bar {
         font-size: 10px;
-        padding: 8px;
     }
-
-    #site-header {
-        min-height: 70px;
-    }
-
-    #hero-banner {
-        min-height: 300px;
-        background-position: center;
-    }
-
-    #shop-by-category,
-    #featured-collection,
-    #product-collections,
-    #brand-story,
-    #customer-reviews {
-        padding: 45px 5%;
-    }
-
-    #custom-design,
-    #newsletter {
-        padding: 45px 5%;
-    }
-
-    #site-footer {
-        padding: 40px 5% 20px;
-    }
-}
-
-@media (max-width: 480px) {
-
-    #hero-banner {
-        min-height: 220px;
-    }
-
-}
-
-/* HEADER DESIGN */
-
-.header-container {
-    max-width: 1450px;
-    min-height: 90px;
-    margin: auto;
-    padding: 15px 5%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 30px;
-}
-
-.store-logo img {
-    width: 180px;
-    height: 65px;
-    object-fit: contain;
-}
-
-.header-search {
-    display: flex;
-    width: 45%;
-    height: 43px;
-    border: 1px solid var(--gold);
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.header-search input {
-    flex: 1;
-    min-width: 0;
-    padding: 0 15px;
-    background: #171515;
-    color: white;
-    border: none;
-    outline: none;
-}
-
-.header-search button {
-    width: 50px;
-    background: var(--gold);
-    color: var(--black);
-    border: none;
-    font-size: 23px;
-}
-
-.header-icons {
-    display: flex;
-    align-items: center;
-    gap: 22px;
-    font-size: 22px;
-}
-
-.header-icons a:hover {
-    color: var(--gold);
-}
-
-.header-icons span {
-    font-size: 12px;
-    color: var(--gold);
-}
-
-/* NAVIGATION DESIGN */
-
-#main-navigation {
-    min-height: 48px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.navigation-links {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 38px;
-    list-style: none;
-}
-
-.navigation-links a {
-    display: block;
-    padding: 13px 0;
-    color: var(--ivory);
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    transition: 0.3s;
-}
-
-.navigation-links a:hover {
-    color: var(--gold);
-}
-
-.mobile-menu-btn {
-    display: none;
-    background: transparent;
-    color: var(--gold);
-    border: none;
-    font-size: 25px;
-}
-
-/* MOBILE RESPONSIVE */
-
-@media (max-width: 768px) {
 
     .header-container {
-        min-height: 75px;
-        gap: 10px;
+        min-height: 72px;
         padding: 10px 4%;
+        gap: 10px;
     }
 
     .store-logo img {
-        width: 115px;
-        height: 50px;
+        width: 105px;
+        height: 48px;
     }
 
     .header-search {
-        width: auto;
         flex: 1;
+        width: auto;
         height: 36px;
     }
 
     .header-search input {
-        width: 50px;
         padding: 0 7px;
         font-size: 11px;
     }
@@ -348,7 +455,7 @@ section {
     }
 
     .header-icons {
-        gap: 10px;
+        gap: 9px;
         font-size: 18px;
     }
 
@@ -368,16 +475,12 @@ section {
         top: 100%;
         left: 0;
         width: 100%;
+        padding: 10px 5%;
         background: var(--dark);
         flex-direction: column;
         align-items: flex-start;
         gap: 0;
-        padding: 10px 5%;
-        z-index: 1000;
-    }
-
-    #main-navigation {
-        position: relative;
+        box-shadow: var(--shadow);
     }
 
     .navigation-links.active {
@@ -391,5 +494,59 @@ section {
 
     .navigation-links a {
         padding: 12px 0;
+        font-size: 14px;
     }
+
+    #hero-banner {
+        min-height: 260px;
+        background-position: center;
+    }
+
+    #shop-by-category,
+    #featured-collection,
+    #islamic-art-collection,
+    #wall-art-collection,
+    #home-decor-collection,
+    #product-collections,
+    #customer-reviews,
+    #video-showcase {
+        padding: 40px 4%;
+    }
+
+    #custom-design,
+    #brand-story,
+    #newsletter {
+        padding: 45px 5%;
+    }
+
+    .section-heading h2 {
+        font-size: 24px;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .header-icons {
+        gap: 7px;
+        font-size: 16px;
+    }
+
+    .store-logo img {
+        width: 85px;
+    }
+
+    #hero-banner {
+        min-height: 210px;
+    }
+
+    .section-heading h2 {
+        font-size: 21px;
+    }
+
+    #cart-drawer {
+        width: 100%;
+        max-width: 100%;
+    }
+
 }
