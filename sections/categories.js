@@ -25,6 +25,11 @@
             name: "Wall Clocks",
             image: "images/categories/wall-clocks.jpg",
             link: "#wall-clocks-collection"
+        },
+        {
+            name: "Custom Name & Number Plates",
+            image: "images/banners/custom-design.jpg",
+            link: "#custom-design"
         }
     ];
 
