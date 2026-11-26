@@ -16,6 +16,8 @@ window.HOTANI_STORE = {
 ========================================== */
 
 const sectionFiles = [
+    "data/products.js",
+
     "sections/announcement.js",
     "sections/header.js",
     "sections/cart.js",
@@ -42,6 +44,7 @@ const sectionFiles = [
 ========================================== */
 
 function loadSectionFiles(index = 0) {
+
     if (index >= sectionFiles.length) {
         initializeStore();
         return;
@@ -81,6 +84,7 @@ function initializeStore() {
 ========================================== */
 
 function initializeMobileMenu() {
+
     const menuButton = document.getElementById("mobile-menu-btn");
     const navigation = document.getElementById("main-navigation");
 
@@ -91,9 +95,11 @@ function initializeMobileMenu() {
     });
 
     navigation.querySelectorAll("a").forEach(link => {
+
         link.addEventListener("click", function () {
             navigation.classList.remove("mobile-menu-open");
         });
+
     });
 }
 
@@ -103,12 +109,14 @@ function initializeMobileMenu() {
 ========================================== */
 
 function initializeSearch() {
+
     const searchInput = document.getElementById("store-search");
     const searchButton = document.getElementById("search-button");
 
     if (!searchInput) return;
 
     function searchProducts() {
+
         const query = searchInput.value.trim();
 
         if (!query) {
@@ -125,9 +133,11 @@ function initializeSearch() {
     }
 
     searchInput.addEventListener("keydown", function (event) {
+
         if (event.key === "Enter") {
             searchProducts();
         }
+
     });
 }
 
@@ -139,20 +149,27 @@ function initializeSearch() {
 let storeCart = [];
 
 function loadCartData() {
+
     try {
+
         storeCart = JSON.parse(
             localStorage.getItem("hotani_cart")
         ) || [];
+
     } catch (error) {
+
         storeCart = [];
+
     }
 }
 
 function saveCartData() {
+
     localStorage.setItem(
         "hotani_cart",
         JSON.stringify(storeCart)
     );
+
 }
 
 
@@ -161,6 +178,7 @@ function saveCartData() {
 ========================================== */
 
 window.HOTANI_ADD_TO_CART = function (product) {
+
     if (!product || !product.id) {
         console.error("Invalid product information.");
         return;
@@ -176,8 +194,11 @@ window.HOTANI_ADD_TO_CART = function (product) {
     );
 
     if (existingProduct) {
+
         existingProduct.quantity += quantity;
+
     } else {
+
         storeCart.push({
             id: product.id,
             name: product.name || "Product",
@@ -185,11 +206,13 @@ window.HOTANI_ADD_TO_CART = function (product) {
             quantity: quantity,
             image: product.image || ""
         });
+
     }
 
     saveCartData();
     updateCartDisplay();
     openCartDrawer();
+
 };
 
 
@@ -198,12 +221,14 @@ window.HOTANI_ADD_TO_CART = function (product) {
 ========================================== */
 
 window.HOTANI_REMOVE_FROM_CART = function (productId) {
+
     storeCart = storeCart.filter(
         item => item.id !== productId
     );
 
     saveCartData();
     updateCartDisplay();
+
 };
 
 
@@ -212,6 +237,7 @@ window.HOTANI_REMOVE_FROM_CART = function (productId) {
 ========================================== */
 
 window.HOTANI_CHANGE_QUANTITY = function (productId, change) {
+
     const product = storeCart.find(
         item => item.id === productId
     );
@@ -227,6 +253,7 @@ window.HOTANI_CHANGE_QUANTITY = function (productId, change) {
 
     saveCartData();
     updateCartDisplay();
+
 };
 
 
@@ -235,6 +262,7 @@ window.HOTANI_CHANGE_QUANTITY = function (productId, change) {
 ========================================== */
 
 function updateCartDisplay() {
+
     const cartCount = document.getElementById("cart-count");
     const cartItems = document.getElementById("cart-items");
     const cartTotal = document.getElementById("cart-total");
@@ -261,22 +289,27 @@ function updateCartDisplay() {
     if (!cartItems) return;
 
     if (storeCart.length === 0) {
+
         cartItems.innerHTML = `
             <p class="empty-cart">
                 Your cart is currently empty.
             </p>
         `;
+
         return;
     }
 
     cartItems.innerHTML = storeCart.map(item => `
+
         <div class="cart-item">
+
             <img
                 src="${escapeHTML(item.image)}"
                 alt="${escapeHTML(item.name)}"
             >
 
             <div class="cart-item-details">
+
                 <h4>${escapeHTML(item.name)}</h4>
 
                 <p>
@@ -284,6 +317,7 @@ function updateCartDisplay() {
                 </p>
 
                 <div class="cart-quantity">
+
                     <button
                         onclick="HOTANI_CHANGE_QUANTITY('${escapeHTML(item.id)}', -1)"
                     >−</button>
@@ -293,15 +327,20 @@ function updateCartDisplay() {
                     <button
                         onclick="HOTANI_CHANGE_QUANTITY('${escapeHTML(item.id)}', 1)"
                     >+</button>
+
                 </div>
+
             </div>
 
             <button
                 class="remove-cart-item"
                 onclick="HOTANI_REMOVE_FROM_CART('${escapeHTML(item.id)}')"
             >×</button>
+
         </div>
+
     `).join("");
+
 }
 
 
@@ -310,7 +349,9 @@ function updateCartDisplay() {
 ========================================== */
 
 function escapeHTML(value) {
+
     return String(value).replace(/[&<>"']/g, function (char) {
+
         return {
             "&": "&amp;",
             "<": "&lt;",
@@ -318,7 +359,9 @@ function escapeHTML(value) {
             '"': "&quot;",
             "'": "&#039;"
         }[char];
+
     });
+
 }
 
 
@@ -327,22 +370,27 @@ function escapeHTML(value) {
 ========================================== */
 
 function openCartDrawer() {
+
     const drawer = document.getElementById("cart-drawer");
 
     if (drawer) {
         drawer.classList.add("cart-open");
     }
+
 }
 
 function closeCartDrawer() {
+
     const drawer = document.getElementById("cart-drawer");
 
     if (drawer) {
         drawer.classList.remove("cart-open");
     }
+
 }
 
 function initializeCart() {
+
     loadCartData();
     updateCartDisplay();
 
@@ -355,19 +403,26 @@ function initializeCart() {
     }
 
     if (drawer) {
+
         drawer.addEventListener("click", function (event) {
+
             if (
                 event.target.closest("#close-cart") ||
                 event.target.classList.contains("cart-overlay")
             ) {
+
                 closeCartDrawer();
+
             }
+
         });
+
     }
 
     if (checkoutButton) {
         checkoutButton.addEventListener("click", checkoutOnWhatsApp);
     }
+
 }
 
 
@@ -376,6 +431,7 @@ function initializeCart() {
 ========================================== */
 
 function checkoutOnWhatsApp() {
+
     if (storeCart.length === 0) {
         alert("Your cart is empty.");
         return;
@@ -392,10 +448,12 @@ function checkoutOnWhatsApp() {
         "Assalam-o-Alaikum! I want to place an order:\n\n";
 
     storeCart.forEach((item, index) => {
+
         message +=
             `${index + 1}. ${item.name}\n` +
             `Quantity: ${item.quantity}\n` +
             `Price: Rs. ${item.price * item.quantity}\n\n`;
+
     });
 
     const total = storeCart.reduce(
@@ -412,6 +470,7 @@ function checkoutOnWhatsApp() {
         encodeURIComponent(message);
 
     window.open(whatsappURL, "_blank");
+
 }
 
 
@@ -420,13 +479,17 @@ function checkoutOnWhatsApp() {
 ========================================== */
 
 function initializeNewsletter() {
+
     const form = document.getElementById("newsletter-form");
 
     if (!form) return;
 
     form.addEventListener("submit", function (event) {
+
         event.preventDefault();
+
     });
+
 }
 
 
