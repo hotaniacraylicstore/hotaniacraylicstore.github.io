@@ -2,112 +2,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Collections | HOTANI ACRYLIC STORE</title>
-    <link rel="stylesheet" href="../style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collections | HOTANI ACRYLIC STORE</title>
+<link rel="stylesheet" href="../style.css">
 
-    <style>
-        .collections-page {
-            max-width: 1200px;
-            margin: 45px auto;
-            padding: 20px;
-        }
-
-        .collections-heading {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .collections-heading h1 {
-            font-size: 34px;
-            margin-bottom: 12px;
-        }
-
-        .collections-heading p {
-            color: #777;
-        }
-
-        .collections-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
-        }
-
-        .collection-card {
-            display: block;
-            padding: 35px 20px;
-            text-align: center;
-            border: 1px solid #e5e5e5;
-            border-radius: 12px;
-            text-decoration: none;
-            color: #111;
-            background: #fff;
-            transition: transform .25s ease, box-shadow .25s ease;
-        }
-
-        .collection-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,.08);
-        }
-
-        .collection-card h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .collection-card p {
-            color: #777;
-            font-size: 14px;
-        }
-
-        @media (max-width: 600px) {
-            .collections-heading h1 {
-                font-size: 27px;
-            }
-        }
-    </style>
+<style>
+.page{max-width:1200px;margin:40px auto;padding:20px}
+.heading{text-align:center;margin-bottom:35px}
+.heading h1{font-size:32px;margin-bottom:10px}
+.heading p{color:#777}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px}
+.card{padding:30px 20px;text-align:center;border:1px solid #eee;border-radius:10px;text-decoration:none;color:#222;background:#fff;transition:.3s}
+.card:hover{transform:translateY(-5px);box-shadow:0 8px 25px rgba(0,0,0,.08)}
+.card h2{font-size:19px;margin-bottom:10px}
+.card p{font-size:14px;color:#777}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:25px}
+.product-card{border:1px solid #eee;border-radius:10px;overflow:hidden}
+.product-card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+.product-info{padding:17px}
+.product-info h3{margin-bottom:10px}
+.price{font-weight:bold;margin-bottom:12px}
+.details{display:inline-block;background:#222;color:white;text-decoration:none;padding:10px 18px;border-radius:5px}
+.message{grid-column:1/-1;text-align:center;padding:45px 10px;color:#777}
+</style>
 </head>
 
 <body>
 
-    <main class="collections-page">
+<div id="announcement-bar">Welcome to HOTANI ACRYLIC STORE</div>
 
-        <div class="collections-heading">
-            <h1>Our Collections</h1>
-            <p>Explore all collections at HOTANI ACRYLIC STORE.</p>
-        </div>
+<header style="padding:20px 4%;border-bottom:1px solid #eee;">
+<a href="../index.html" style="font-size:22px;font-weight:bold;color:#222;text-decoration:none;">HOTANI ACRYLIC STORE</a>
+<a href="../index.html" style="float:right;">Home</a>
+</header>
 
-        <div class="collections-grid">
+<nav style="padding:15px 4%;background:#f7f7f7;">
+<a href="../index.html">Home</a> / Collections
+</nav>
 
-            <a href="islamic-calligraphy.html" class="collection-card">
-                <h2>Islamic Calligraphy</h2>
-                <p>Beautiful Islamic artwork and designs.</p>
-            </a>
+<main class="page">
 
-            <a href="modern-wall-art.html" class="collection-card">
-                <h2>Modern Wall Art</h2>
-                <p>Creative designs for your walls.</p>
-            </a>
+<div class="heading">
+<h1 id="page-title">Our Collections</h1>
+<p id="page-description">Explore all collections at HOTANI ACRYLIC STORE.</p>
+</div>
 
-            <a href="acrylic-mirrors.html" class="collection-card">
-                <h2>Acrylic Mirrors</h2>
-                <p>Stylish acrylic mirror collections.</p>
-            </a>
+<div id="collections-content" class="grid"></div>
 
-            <a href="wall-clocks.html" class="collection-card">
-                <h2>Wall Clocks</h2>
-                <p>Decorative clocks for your spaces.</p>
-            </a>
+</main>
 
-            <a href="custom-plates.html" class="collection-card">
-                <h2>Custom Name & Number Plates</h2>
-                <p>Personalized designs made for you.</p>
-            </a>
+<footer style="background:#222;color:white;padding:25px;text-align:center;">
+© 2026 HOTANI ACRYLIC STORE. All Rights Reserved.
+</footer>
 
-        </div>
+<script src="../data/products.js"></script>
 
-    </main>
+<script>
+(function(){
+
+const params=new URLSearchParams(window.location.search);
+const category=params.get("category");
+const content=document.getElementById("collections-content");
+
+const categories=[
+{
+id:"islamic-calligraphy",
+name:"Islamic Calligraphy",
+description:"Beautiful Islamic artwork and designs.",
+link:"islamic-calligraphy.html"
+},
+{
+id:"modern-wall-art",
+name:"Modern Wall Art",
+description:"Creative designs for your walls.",
+link:"modern-wall-art.html"
+},
+{
+id:"acrylic-mirrors",
+name:"Acrylic Mirrors",
+description:"Stylish acrylic mirror collections.",
+link:"acrylic-mirrors.html"
+},
+{
+id:"wall-clocks",
+name:"Wall Clocks",
+description:"Decorative clocks for your spaces.",
+link:"wall-clocks.html"
+},
+{
+id:"custom-plates",
+name:"Custom Name & Number Plates",
+description:"Personalized designs made for you.",
+link:"custom-plates.html"
+}
+];
+
+if(category){
+
+const selectedName=category==="accessories"
+? "Acrylic Accessories"
+: category==="wall-decor"
+? "Wall Decor"
+: "Collection";
+
+document.getElementById("page-title").textContent=selectedName;
+document.getElementById("page-description").textContent="Explore our "+selectedName+" collection.";
+
+const products=window.HOTANI_GET_PRODUCTS_BY_CATEGORY
+? window.HOTANI_GET_PRODUCTS_BY_CATEGORY(category)
+: [];
+
+if(!products || products.length===0){
+
+content.innerHTML=`
+<p class="message">New ${selectedName} products coming soon.</p>
+`;
+
+}else{
+
+content.className="product-grid";
+
+content.innerHTML=products.map(product=>{
+
+const price=Number(product.offerPrice)>0
+? product.offerPrice
+: product.price;
+
+const link="product-details.html?id="+encodeURIComponent(product.id);
+
+return `
+<div class="product-card">
+<a href="${link}">
+<img src="../${product.image}" alt="${product.name}" loading="lazy">
+</a>
+<div class="product-info">
+<h3>${product.name}</h3>
+<p class="price">Rs. ${Number(price).toLocaleString("en-PK")}</p>
+<a class="details" href="${link}">View Details</a>
+</div>
+</div>
+`;
+
+}).join("");
+
+}
+
+}else{
+
+content.className="grid";
+
+content.innerHTML=categories.map(item=>`
+<a href="${item.link}" class="card">
+<h2>${item.name}</h2>
+<p>${item.description}</p>
+</a>
+`).join("")+`
+<a href="collections.html?category=accessories" class="card">
+<h2>Acrylic Accessories</h2>
+<p>Explore our acrylic accessories.</p>
+</a>
+<a href="collections.html?category=wall-decor" class="card">
+<h2>Wall Decor</h2>
+<p>Explore beautiful wall decor designs.</p>
+</a>
+`;
+
+}
+
+})();
+</script>
 
 </body>
 </html>
