@@ -140,7 +140,7 @@ return;
 const basePrice = Number(product.offerPrice)>0 ? Number(product.offerPrice) : Number(product.price);
 const isBismillah = product.id === "gold-acrylic-bismillah";
 
-let unit="inch",quantity=1,width=12,height=12,calculatedPrice=basePrice;
+let unit="inch",quantity=1,width=6,height=6,calculatedPrice=basePrice;
 let selectedPreset="";
 
 function money(n){return "Rs. "+Math.round(n).toLocaleString("en-PK");}
@@ -189,15 +189,15 @@ ${isBismillah?`
 <button type="button" id="feet-unit">Feet</button>
 </div>
 <div class="size-fields">
-<div><label>Width (<span id="width-unit">inches</span>)</label><input id="width-input" type="number" min="12" step=".5" value="12"></div>
-<div><label>Height (<span id="height-unit">inches</span>)</label><input id="height-input" type="number" min="12" step=".5" value="12"></div>
+<div><label>Width (<span id="width-unit">inches</span>)</label><input id="width-input" type="number" min="6" step=".5" value="6"></div>
+<div><label>Height (<span id="height-unit">inches</span>)</label><input id="height-input" type="number" min="6" step=".5" value="6"></div>
 </div>
-<div class="minimum-note" id="minimum-note">Minimum size: 12 × 12 inches</div>
-<div class="size-error" id="size-error">Minimum size must be 12 × 12 inches or 1 × 1 feet.</div>
+<div class="minimum-note" id="minimum-note">Minimum size: 6 × 6 inches</div>
+<div class="size-error" id="size-error">Minimum size must be 6 × 6 inches or 0.5 × 0.5 feet.</div>
 <div class="price-summary">
-<div class="price-row"><span>Selected Size</span><strong id="selected-size">12 × 12 inches</strong></div>
+<div class="price-row"><span>Selected Size</span><strong id="selected-size">6 × 6 inches</strong></div>
 <div class="price-row"><span>Base Price</span><strong>${money(basePrice)}</strong></div>
-<div class="price-row total-row"><span>Your Size Price</span><strong id="calculated-price">${money(basePrice)}</strong></div>
+<div class="price-row total-row"><span>Your Size Price</span><strong id="calculated-price">${money(basePrice/4)}</strong></div>
 </div>
 </div>
 
@@ -279,7 +279,7 @@ const error=document.getElementById("size-error");
 
 function updatePrice(){
 width=Number(wi.value);height=Number(hi.value);
-const min=unit==="inch"?12:1;
+const min=unit==="inch"?6:0.5;
 
 if(!wi.value||!hi.value||!Number.isFinite(width)||!Number.isFinite(height)||width<min||height<min){
 error.style.display="block";
@@ -304,13 +304,13 @@ return true;
 
 function setUnit(next){
 unit=next;
-wi.value=next==="inch"?12:1;
-hi.value=next==="inch"?12:1;
-wi.min=hi.min=next==="inch"?12:1;
+wi.value=next==="inch"?6:0.5;
+hi.value=next==="inch"?6:0.5;
+wi.min=hi.min=next==="inch"?6:0.5;
 wi.step=hi.step=next==="inch"?.5:.1;
 document.getElementById("width-unit").textContent=next==="inch"?"inches":"feet";
 document.getElementById("height-unit").textContent=next==="inch"?"inches":"feet";
-document.getElementById("minimum-note").textContent=next==="inch"?"Minimum size: 12 × 12 inches":"Minimum size: 1 × 1 feet";
+document.getElementById("minimum-note").textContent=next==="inch"?"Minimum size: 6 × 6 inches":"Minimum size: 0.5 × 0.5 feet";
 document.getElementById("inch-unit").classList.toggle("active",next==="inch");
 document.getElementById("feet-unit").classList.toggle("active",next==="feet");
 document.querySelectorAll(".size-option").forEach(b=>b.classList.remove("active"));
@@ -327,7 +327,7 @@ b.addEventListener("click",()=>{
 unit="inch";
 selectedPreset=b.dataset.w+"x"+b.dataset.h;
 wi.value=b.dataset.w;hi.value=b.dataset.h;
-wi.min=hi.min=1;
+wi.min=hi.min=6;
 document.getElementById("width-unit").textContent="inches";
 document.getElementById("height-unit").textContent="inches";
 document.getElementById("inch-unit").classList.add("active");
