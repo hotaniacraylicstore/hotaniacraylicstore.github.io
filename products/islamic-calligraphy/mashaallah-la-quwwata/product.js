@@ -8,7 +8,13 @@
         price: 2898,
         offerPrice: 1449,
         badge: "50% OFF",
-        image: "products/islamic-calligraphy/mashaallah-la-quwwata/images/main.jpg"
+
+        image: "products/islamic-calligraphy/mashaallah-la-quwwata/images/main.jpg",
+
+        images: [
+            "products/islamic-calligraphy/mashaallah-la-quwwata/images/image-2.jpg",
+            "products/islamic-calligraphy/mashaallah-la-quwwata/images/image-3.jpg"
+        ]
     };
 
     window.HOTANI_PRODUCTS_DATA.products.push(product);
