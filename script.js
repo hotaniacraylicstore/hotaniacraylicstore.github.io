@@ -32,6 +32,12 @@ const sectionFiles = [
     "sections/modern-wall-art.js",
     "sections/acrylic-mirrors.js",
     "sections/wall-clocks.js",
+
+    // NEW COLLECTION SECTIONS
+    "sections/accessories.js",
+    "sections/wall-decor.js",
+
+    // OTHER SECTIONS
     "sections/custom-plates.js",
     "sections/stock-announcement.js",
     "sections/reviews.js",
@@ -66,6 +72,7 @@ function loadSectionFiles(index = 0) {
     };
 
     script.onerror = function () {
+
         console.error(
             "File failed to load:",
             sectionFiles[index]
@@ -147,11 +154,8 @@ function initializeSearch() {
         const query = searchInput.value.trim();
 
         if (!query) {
-
             searchInput.focus();
-
             return;
-
         }
 
         window.location.href =
@@ -172,9 +176,7 @@ function initializeSearch() {
     searchInput.addEventListener("keydown", function (event) {
 
         if (event.key === "Enter") {
-
             searchProducts();
-
         }
 
     });
@@ -348,9 +350,7 @@ function updateCartDisplay() {
 
 
     if (cartCount) {
-
         cartCount.textContent = totalQuantity;
-
     }
 
 
@@ -467,9 +467,7 @@ function openCartDrawer() {
         document.getElementById("cart-drawer");
 
     if (drawer) {
-
         drawer.classList.add("cart-open");
-
     }
 
 }
@@ -481,9 +479,7 @@ function closeCartDrawer() {
         document.getElementById("cart-drawer");
 
     if (drawer) {
-
         drawer.classList.remove("cart-open");
-
     }
 
 }
@@ -587,11 +583,8 @@ function checkoutOnWhatsApp() {
     storeCart.forEach((item, index) => {
 
         message +=
-
             `${index + 1}. ${item.name}\n` +
-
             `Quantity: ${item.quantity}\n` +
-
             `Price: Rs. ${item.price * item.quantity}\n\n`;
 
     });
@@ -608,13 +601,9 @@ function checkoutOnWhatsApp() {
 
 
     const whatsappURL =
-
         "https://wa.me/" +
-
         phone.replace(/\D/g, "") +
-
         "?text=" +
-
         encodeURIComponent(message);
 
 
