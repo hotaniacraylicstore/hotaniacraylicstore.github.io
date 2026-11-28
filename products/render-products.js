@@ -10,6 +10,18 @@
         return "Rs. " + Number(price).toLocaleString("en-PK");
     }
 
+    function escapeHTML(value) {
+        return String(value ?? "").replace(/[&<>"']/g, function (char) {
+            return {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;"
+            }[char];
+        });
+    }
+
     function createProductCard(product) {
 
         const price = Number(product.offerPrice) > 0
@@ -21,7 +33,7 @@
             : "";
 
         const badge = product.badge
-            ? `<span class="sale-badge">${product.badge}</span>`
+            ? `<span class="sale-badge">${escapeHTML(product.badge)}</span>`
             : "";
 
         return `
@@ -30,14 +42,14 @@
                 ${badge}
 
                 <img
-                    src="${product.image}"
-                    alt="${product.name}"
+                    src="${escapeHTML(product.image)}"
+                    alt="${escapeHTML(product.name)}"
                     loading="lazy"
                 >
 
                 <div class="product-card-content">
 
-                    <h3>${product.name}</h3>
+                    <h3>${escapeHTML(product.name)}</h3>
 
                     <div class="product-price">
                         ${oldPrice}
@@ -48,7 +60,7 @@
 
                     <button
                         class="add-to-cart-btn"
-                        data-product-id="${product.id}"
+                        data-product-id="${escapeHTML(product.id)}"
                     >
                         Add to Cart
                     </button>
@@ -59,14 +71,13 @@
         `;
     }
 
-
     function renderCategory(categoryId, containerId) {
 
         const container = document.getElementById(containerId);
 
         if (!container) return;
 
-        if (!window.HOTANI_GET_PRODUCTS) {
+        if (typeof window.HOTANI_GET_PRODUCTS_BY_CATEGORY !== "function") {
             container.innerHTML = "<p>Products are loading...</p>";
             return;
         }
@@ -85,9 +96,7 @@
         container.innerHTML = products
             .map(product => createProductCard(product))
             .join("");
-
     }
-
 
     function renderAllProducts() {
 
@@ -113,7 +122,6 @@
 
     }
 
-
     document.addEventListener("click", function (event) {
 
         const button = event.target.closest(".add-to-cart-btn");
@@ -121,6 +129,8 @@
         if (!button) return;
 
         const productId = button.dataset.productId;
+
+        if (typeof window.HOTANI_GET_PRODUCT !== "function") return;
 
         const product = window.HOTANI_GET_PRODUCT(productId);
 
@@ -130,16 +140,19 @@
             ? Number(product.offerPrice)
             : Number(product.price);
 
-        window.HOTANI_ADD_TO_CART({
-            id: product.id,
-            name: product.name,
-            price: price,
-            image: product.image,
-            quantity: 1
-        });
+        if (typeof window.HOTANI_ADD_TO_CART === "function") {
+
+            window.HOTANI_ADD_TO_CART({
+                id: product.id,
+                name: product.name,
+                price: price,
+                image: product.image,
+                quantity: 1
+            });
+
+        }
 
     });
-
 
     window.HOTANI_RENDER_PRODUCTS = renderAllProducts;
 
