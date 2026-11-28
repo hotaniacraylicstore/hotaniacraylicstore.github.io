@@ -6,65 +6,57 @@
     if (!section) return;
 
     const categories = [
-        {
-            name: "Islamic Calligraphy",
-            image: "images/banners/banner-2.jpg",
-            link: "#islamic-art-collection"
-        },
-        {
-            name: "Modern Wall Art",
-            image: "images/banners/banner-3.jpg",
-            link: "#wall-art-collection"
-        },
-        {
-            name: "Acrylic Mirrors",
-            image: "images/banners/hotani-acrylic-hero-banner.jpg",
-            link: "#acrylic-mirrors-collection"
-        },
-        {
-            name: "Wall Clocks",
-            image: "images/banners/banner-2.jpg",
-            link: "#wall-clocks-collection"
-        },
-        {
-            name: "Custom Name & Number Plates",
-            image: "images/banners/custom-design.jpg",
-            link: "#custom-design"
-        },
-        {
-            name: "Acrylic Accessories",
-            image: "images/banners/banner-3.jpg",
-            link: "#accessories-collection"
-        },
-        {
-            name: "Wall Decor",
-            image: "images/banners/hotani-acrylic-hero-banner.jpg",
-            link: "#wall-decor-collection"
-        }
+        { id: "islamic-calligraphy", name: "Islamic Calligraphy", link: "pages/islamic-calligraphy.html" },
+        { id: "modern-wall-art", name: "Modern Wall Art", link: "pages/modern-wall-art.html" },
+        { id: "acrylic-mirrors", name: "Acrylic Mirrors", link: "pages/acrylic-mirrors.html" },
+        { id: "wall-clocks", name: "Wall Clocks", link: "pages/wall-clocks.html" },
+        { id: "custom-plates", name: "Custom Name & Number Plates", link: "pages/custom-plates.html" },
+        { id: "accessories", name: "Acrylic Accessories", link: "pages/collections.html?category=accessories" },
+        { id: "wall-decor", name: "Wall Decor", link: "pages/collections.html?category=wall-decor" }
     ];
 
-    section.innerHTML = `
-        <div class="section-container">
-            <div class="section-heading">
-                <h2>Shop by Category</h2>
-                <p>Explore our exclusive wall decor collections</p>
-            </div>
+    function renderCategories() {
+        const products = window.HOTANI_GET_PRODUCTS
+            ? window.HOTANI_GET_PRODUCTS()
+            : [];
 
-            <div class="category-grid">
-                ${categories.map(category => `
-                    <a href="${category.link}" class="category-card">
-                        <img
-                            src="${category.image}"
-                            alt="${category.name}"
-                            loading="lazy"
-                        >
-                        <div class="category-info">
-                            <h3>${category.name}</h3>
-                            <span>Shop Now →</span>
-                        </div>
-                    </a>
-                `).join("")}
+        section.innerHTML = `
+            <div class="section-container">
+                <div class="section-heading">
+                    <h2>Shop by Category</h2>
+                    <p>Explore our exclusive wall decor collections</p>
+                </div>
+
+                <div class="category-grid">
+                    ${categories.map(category => {
+                        const product = products.find(
+                            item => item.category === category.id && item.image
+                        );
+
+                        const image = product
+                            ? product.image
+                            : "";
+
+                        return `
+                            <a href="${category.link}" class="category-card">
+                                ${
+                                    image
+                                    ? `<img src="${image}" alt="${category.name}" loading="lazy">`
+                                    : `<div class="category-no-image">Products Coming Soon</div>`
+                                }
+                                <div class="category-info">
+                                    <h3>${category.name}</h3>
+                                    <span>Shop Now →</span>
+                                </div>
+                            </a>
+                        `;
+                    }).join("")}
+                </div>
             </div>
-        </div>
-    `;
+        `;
+    }
+
+    window.HOTANI_REFRESH_CATEGORIES = renderCategories;
+
+    renderCategories();
 })();
