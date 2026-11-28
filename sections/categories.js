@@ -8,28 +8,38 @@
     const categories = [
         {
             name: "Islamic Calligraphy",
-            image: "images/categories/islamic-calligraphy.jpg",
+            image: "images/banners/banner-2.jpg",
             link: "#islamic-art-collection"
         },
         {
             name: "Modern Wall Art",
-            image: "images/categories/modern-wall-art.jpg",
+            image: "images/banners/banner-3.jpg",
             link: "#wall-art-collection"
         },
         {
             name: "Acrylic Mirrors",
-            image: "images/categories/acrylic-mirrors.jpg",
+            image: "images/banners/hotani-acrylic-hero-banner.jpg",
             link: "#acrylic-mirrors-collection"
         },
         {
             name: "Wall Clocks",
-            image: "images/categories/wall-clocks.jpg",
+            image: "images/banners/banner-2.jpg",
             link: "#wall-clocks-collection"
         },
         {
             name: "Custom Name & Number Plates",
             image: "images/banners/custom-design.jpg",
             link: "#custom-design"
+        },
+        {
+            name: "Acrylic Accessories",
+            image: "images/banners/banner-3.jpg",
+            link: "#accessories-collection"
+        },
+        {
+            name: "Wall Decor",
+            image: "images/banners/hotani-acrylic-hero-banner.jpg",
+            link: "#wall-decor-collection"
         }
     ];
 
@@ -43,7 +53,11 @@
             <div class="category-grid">
                 ${categories.map(category => `
                     <a href="${category.link}" class="category-card">
-                        <img src="${category.image}" alt="${category.name}" loading="lazy">
+                        <img
+                            src="${category.image}"
+                            alt="${category.name}"
+                            loading="lazy"
+                        >
                         <div class="category-info">
                             <h3>${category.name}</h3>
                             <span>Shop Now →</span>
