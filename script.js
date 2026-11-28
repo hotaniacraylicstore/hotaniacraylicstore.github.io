@@ -641,3 +641,34 @@ document.addEventListener("DOMContentLoaded", function () {
     loadSectionFiles();
 
 });
+
+/* FLOATING WHATSAPP BUTTON */
+
+(function () {
+    function addWhatsAppButton() {
+        if (document.querySelector(".whatsapp-float")) return;
+
+        const button = document.createElement("a");
+
+        button.href = "https://wa.me/923336461771";
+        button.className = "whatsapp-float";
+        button.target = "_blank";
+        button.rel = "noopener noreferrer";
+        button.setAttribute("aria-label", "Chat on WhatsApp");
+
+        button.innerHTML = `
+            <svg viewBox="0 0 32 32" width="32" height="32"
+                 fill="currentColor" aria-hidden="true">
+                <path d="M16 .5A15.4 15.4 0 0 0 2.7 23.7L.5 31.5l8-2.1A15.5 15.5 0 1 0 16 .5zm0 28.3a12.8 12.8 0 0 1-6.5-1.8l-.5-.3-4.8 1.3 1.3-4.7-.3-.5A12.8 12.8 0 1 1 16 28.8zm7-9.6c-.4-.2-2.2-1.1-2.5-1.2-.3-.1-.6-.2-.8.2-.3.4-1 1.2-1.2 1.4-.2.2-.4.3-.8.1-.4-.2-1.6-.6-3-1.9-1.1-1-1.9-2.2-2.1-2.6-.2-.4 0-.6.2-.8l.6-.7c.2-.2.3-.4.4-.6.1-.2 0-.5 0-.7-.1-.2-.8-2-1.1-2.7-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.4-1.2 1.2-1.2 3s1.2 3.4 1.4 3.7c.2.2 2.4 3.7 5.8 5.1.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 2.2-.9 2.5-1.8.3-.9.3-1.6.2-1.8-.1-.2-.3-.3-.7-.5z"/>
+            </svg>
+        `;
+
+        document.body.appendChild(button);
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", addWhatsAppButton);
+    } else {
+        addWhatsAppButton();
+    }
+})();
