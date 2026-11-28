@@ -6,7 +6,7 @@
 
 window.HOTANI_STORE = {
     name: "HOTANI ACRYLIC STORE",
-    whatsapp: "",
+    whatsapp: "923336461771",
     currency: "PKR"
 };
 
