@@ -1401,3 +1401,39 @@ section {
         gap: 12px;
     }
 }
+
+/* ==========================================
+   HOTANI CART DRAWER POSITION FIX
+========================================== */
+
+#cart-drawer {
+    transform: none !important;
+    right: 0;
+    pointer-events: none;
+    box-shadow: none;
+}
+
+#cart-drawer.cart-open {
+    pointer-events: auto;
+}
+
+#cart-drawer .cart-overlay {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#cart-drawer.cart-open .cart-overlay {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+#cart-drawer .cart-panel {
+    right: -450px;
+    transition: right 0.3s ease;
+}
+
+#cart-drawer.cart-open .cart-panel {
+    right: 0;
+}
