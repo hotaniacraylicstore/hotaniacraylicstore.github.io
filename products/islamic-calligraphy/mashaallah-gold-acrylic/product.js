@@ -8,7 +8,13 @@
         price: 2298,
         offerPrice: 1149,
         badge: "50% OFF",
-        image: "products/islamic-calligraphy/mashaallah-gold-acrylic/images/main.jpg"
+
+        image: "products/islamic-calligraphy/mashaallah-gold-acrylic/images/main.jpg",
+
+        images: [
+            "products/islamic-calligraphy/mashaallah-gold-acrylic/images/image-2.jpg",
+            "products/islamic-calligraphy/mashaallah-gold-acrylic/images/image-3.jpg"
+        ]
     };
 
     window.HOTANI_PRODUCTS_DATA.products.push(product);
