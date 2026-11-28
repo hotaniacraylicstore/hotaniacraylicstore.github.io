@@ -1437,3 +1437,28 @@ section {
 #cart-drawer.cart-open .cart-panel {
     right: 0;
 }
+
+/* FLOATING WHATSAPP BUTTON */
+
+.whatsapp-float {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    width: 58px;
+    height: 58px;
+    background: #25D366;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    text-decoration: none;
+    z-index: 2000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.whatsapp-float:hover {
+    background: #1ebe5d;
+    transform: scale(1.08);
+}
