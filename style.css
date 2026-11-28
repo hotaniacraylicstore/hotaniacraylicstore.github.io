@@ -1218,3 +1218,45 @@ section {
         height: 52px;
     }
 }
+
+/* HOTANI MOVING GRADIENT EFFECT */
+
+@keyframes hotaniMovingGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.announcement-bar,
+#announcement-bar {
+  background: linear-gradient(
+    270deg,
+    #111111,
+    #8b5e24,
+    #d4af37,
+    #7b4b16,
+    #111111
+  );
+  background-size: 400% 400%;
+  animation: hotaniMovingGradient 8s ease infinite;
+  color: #ffffff;
+}
+
+.gradient-moving {
+  background: linear-gradient(
+    270deg,
+    #111111,
+    #b8860b,
+    #f5d76e,
+    #8b5e24,
+    #111111
+  );
+  background-size: 400% 400%;
+  animation: hotaniMovingGradient 7s ease infinite;
+}
