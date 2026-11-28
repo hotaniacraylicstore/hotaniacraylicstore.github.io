@@ -74,7 +74,6 @@
     function renderCategory(categoryId, containerId) {
 
         const container = document.getElementById(containerId);
-
         if (!container) return;
 
         if (typeof window.HOTANI_GET_PRODUCTS_BY_CATEGORY !== "function") {
@@ -82,7 +81,8 @@
             return;
         }
 
-        const products = window.HOTANI_GET_PRODUCTS_BY_CATEGORY(categoryId);
+        const products =
+            window.HOTANI_GET_PRODUCTS_BY_CATEGORY(categoryId);
 
         if (!products || products.length === 0) {
             container.innerHTML = `
@@ -100,32 +100,25 @@
 
     function renderAllProducts() {
 
-        renderCategory(
-            "islamic-calligraphy",
-            "islamic-calligraphy-products"
-        );
+        renderCategory("islamic-calligraphy", "islamic-calligraphy-products");
 
-        renderCategory(
-            "modern-wall-art",
-            "modern-wall-art-products"
-        );
+        renderCategory("modern-wall-art", "modern-wall-art-products");
 
-        renderCategory(
-            "acrylic-mirrors",
-            "acrylic-mirror-products"
-        );
+        renderCategory("acrylic-mirrors", "acrylic-mirror-products");
 
-        renderCategory(
-            "wall-clocks",
-            "wall-clock-products"
-        );
+        renderCategory("wall-clocks", "wall-clock-products");
+
+        renderCategory("custom-plates", "custom-plates-products");
+
+        renderCategory("accessories", "accessories-products");
+
+        renderCategory("wall-decor", "wall-decor-products");
 
     }
 
     document.addEventListener("click", function (event) {
 
         const button = event.target.closest(".add-to-cart-btn");
-
         if (!button) return;
 
         const productId = button.dataset.productId;
@@ -133,7 +126,6 @@
         if (typeof window.HOTANI_GET_PRODUCT !== "function") return;
 
         const product = window.HOTANI_GET_PRODUCT(productId);
-
         if (!product) return;
 
         const price = Number(product.offerPrice) > 0
