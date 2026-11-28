@@ -46,6 +46,7 @@ header a{color:#222;text-decoration:none;font-weight:bold}
 .action-button{display:block;width:100%;padding:16px;border:none;cursor:pointer;font-size:15px;font-weight:bold;margin-top:12px;border-radius:3px}
 .add-button{background:#222;color:white}
 .buy-button{background:#e8e8e8;color:#222}
+.action-button:disabled{opacity:.5;cursor:not-allowed}
 .details-box{border-top:1px solid #eee;margin-top:28px;padding-top:20px;line-height:1.9;color:#666;font-size:14px}
 .error{text-align:center;padding:70px 20px}
 footer{margin-top:60px;padding:25px;background:#222;color:white;text-align:center;font-size:13px}
@@ -62,25 +63,26 @@ footer{margin-top:60px;padding:25px;background:#222;color:white;text-align:cente
 <div class="topbar">Welcome to HOTANI ACRYLIC STORE</div>
 
 <header>
-<a href="../../index.html" class="brand">HOTANI ACRYLIC STORE</a>
-<a href="../../index.html">← Continue Shopping</a>
+<a href="../index.html" class="brand">HOTANI ACRYLIC STORE</a>
+<a href="../index.html">← Continue Shopping</a>
 </header>
 
 <main class="container">
 <div class="breadcrumb">
-<a href="../../index.html">Home</a> / Product Details
+<a href="../index.html">Home</a> / Product Details
 </div>
 <div id="product-details"><p>Loading product...</p></div>
 </main>
 
 <footer>© HOTANI ACRYLIC STORE. All Rights Reserved.</footer>
 
-<script src="../../data/products.js"></script>
-<script src="../../products/islamic-calligraphy/gold-acrylic-bismillah/product.js"></script>
-<script src="../../products/islamic-calligraphy/round-ayatul-kursi/product.js"></script>
-<script src="../../products/islamic-calligraphy/mashaallah-gold-acrylic/product.js"></script>
-<script src="../../products/islamic-calligraphy/mashaallah-la-quwwata/product.js"></script>
-<script src="../../products/wall-clocks/luxury-gold-black-roman-numeral/product.js"></script>
+<script src="../data/products.js"></script>
+
+<script src="../products/islamic-calligraphy/gold-acrylic-bismillah/product.js"></script>
+<script src="../products/islamic-calligraphy/round-ayatul-kursi/product.js"></script>
+<script src="../products/islamic-calligraphy/mashaallah-gold-acrylic/product.js"></script>
+<script src="../products/islamic-calligraphy/mashaallah-la-quwwata/product.js"></script>
+<script src="../products/wall-clocks/luxury-gold-black-roman-numeral/product.js"></script>
 
 <script>
 (function(){
@@ -95,7 +97,7 @@ container.innerHTML = `
 <div class="error">
 <h2>Product Not Found</h2>
 <p>Sorry, this product is not available.</p>
-<a href="../../index.html">Back to Home</a>
+<a href="../index.html">Back to Home</a>
 </div>`;
 return;
 }
@@ -115,17 +117,16 @@ return "Rs. " + Math.round(value).toLocaleString("en-PK");
 }
 
 function sizeText(){
-if(unit === "inch"){
-return width + " × " + height + " inches";
-}
-return width + " × " + height + " feet";
+return unit === "inch"
+? width + " × " + height + " inches"
+: width + " × " + height + " feet";
 }
 
 container.innerHTML = `
 <div class="product-layout">
 
 <div class="product-image-box">
-<img src="../../${product.image}" alt="${product.name}">
+<img src="../${product.image}" alt="${product.name}">
 </div>
 
 <div class="product-info">
@@ -159,7 +160,6 @@ Select your required size below.
 </div>
 
 <div class="size-fields">
-
 <div>
 <label for="width-input">Width (<span id="unit-width">inches</span>)</label>
 <input id="width-input" type="number" min="12" step="0.5" value="12">
@@ -169,7 +169,6 @@ Select your required size below.
 <label for="height-input">Height (<span id="unit-height">inches</span>)</label>
 <input id="height-input" type="number" min="12" step="0.5" value="12">
 </div>
-
 </div>
 
 <div class="minimum-note" id="minimum-note">
@@ -196,7 +195,6 @@ Minimum size must be 12 × 12 inches or 1 × 1 feet.
 <strong id="calculated-price">${money(basePrice)}</strong>
 </div>
 </div>
-
 </div>
 
 <label class="quantity-label">Quantity</label>
@@ -373,4 +371,3 @@ updatePrice();
 
 </body>
 </html>
-
