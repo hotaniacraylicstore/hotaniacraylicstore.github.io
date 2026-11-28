@@ -8,76 +8,116 @@
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#fff;color:#222}
-.topbar{background:#222;color:#fff;text-align:center;padding:10px;font-size:13px}
-header{padding:18px 5%;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;gap:15px}
-header a{color:#222;text-decoration:none;font-weight:bold}
-.brand{font-size:21px;letter-spacing:1px}
-.container{max-width:1150px;margin:35px auto;padding:0 20px}
-.breadcrumb{font-size:13px;color:#777;margin-bottom:25px}
+body{margin:0;font-family:Arial,sans-serif;color:#222;background:#fff}
+button,input{font-family:inherit}
+.topbar{height:30px;background:#171717;color:#fff;text-align:center;padding:8px;font-size:12px;letter-spacing:.5px}
+header{height:68px;padding:0 5%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee}
+.brand{font-size:20px;font-weight:800;letter-spacing:1px;color:#171717;text-decoration:none}
+.header-links{display:flex;gap:22px;align-items:center;font-size:13px}
+.header-links a{color:#333;text-decoration:none}
+.container{max-width:1250px;margin:28px auto;padding:0 22px}
+.breadcrumb{font-size:12px;color:#888;margin-bottom:25px}
 .breadcrumb a{color:#555;text-decoration:none}
-.product-layout{display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:start}
-.product-image-box{background:#f7f7f7;border-radius:8px;overflow:hidden}
-.product-image-box img{display:block;width:100%;height:auto;object-fit:contain}
-.product-info h1{font-size:30px;line-height:1.3;margin:5px 0 18px}
-.badge{display:inline-block;background:#222;color:white;padding:7px 12px;font-size:12px;margin-bottom:15px}
-.prices{margin:15px 0}
-.old-price{color:#999;text-decoration:line-through;font-size:18px;margin-right:10px}
-.sale-price{font-size:27px;font-weight:bold;color:#222}
-.description{color:#666;line-height:1.8;margin:22px 0;font-size:15px}
-.calculator{border:1px solid #e5e5e5;border-radius:8px;padding:20px;margin:25px 0;background:#fafafa}
-.calculator h3{margin:0 0 8px;font-size:20px}
-.calculator-note{font-size:13px;color:#777;line-height:1.6;margin-bottom:18px}
-.unit-options{display:flex;gap:10px;margin-bottom:18px}
-.unit-options button{flex:1;padding:12px;border:1px solid #ccc;background:#fff;cursor:pointer;font-weight:bold;border-radius:4px}
-.unit-options button.active{background:#222;color:#fff;border-color:#222}
+.product-layout{display:grid;grid-template-columns:54% 42%;gap:4%;align-items:start}
+.gallery-main{width:100%;aspect-ratio:1/1;background:#f7f7f7;border-radius:8px;overflow:hidden}
+.gallery-main img{width:100%;height:100%;object-fit:contain;display:block}
+.thumbnails{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap}
+.thumb{width:85px;height:85px;border:1px solid #ddd;border-radius:5px;overflow:hidden;cursor:pointer;background:#fafafa}
+.thumb.active{border:2px solid #222}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.rating{font-size:13px;color:#777;margin:3px 0 14px}
+.stars{color:#d5a52b;letter-spacing:2px;font-size:17px}
+.product-info h1{font-size:29px;line-height:1.3;margin:8px 0 14px}
+.prices{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:15px 0}
+.sale-price{font-size:26px;font-weight:700;color:#c62828}
+.old-price{font-size:17px;color:#999;text-decoration:line-through}
+.discount{display:inline-block;background:#222;color:#fff;font-size:11px;padding:7px 10px;border-radius:3px}
+.description{font-size:14px;color:#777;line-height:1.8;margin:17px 0}
+.stock{font-size:13px;color:#38834c;margin:18px 0}
+.stock-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#36a568;margin-right:7px}
+.option-title{font-size:14px;font-weight:bold;margin:22px 0 11px}
+.size-options{display:flex;gap:10px;flex-wrap:wrap}
+.size-option{border:1px solid #ccc;background:#fff;padding:12px 18px;border-radius:4px;cursor:pointer;font-size:13px}
+.size-option.active{border:2px solid #222;background:#fafafa;font-weight:bold}
+.calculator{border:1px solid #e5e5e5;border-radius:7px;padding:18px;margin:23px 0;background:#fafafa}
+.calculator h3{font-size:18px;margin:0 0 8px}
+.calculator-note{font-size:12px;color:#777;line-height:1.6;margin-bottom:16px}
+.unit-options{display:flex;gap:8px;margin-bottom:15px}
+.unit-options button{flex:1;padding:11px;border:1px solid #ccc;background:#fff;cursor:pointer;border-radius:4px}
+.unit-options button.active{background:#222;color:#fff}
 .size-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.size-fields label{font-size:13px;font-weight:bold;display:block;margin-bottom:7px}
-.size-fields input{width:100%;padding:13px;border:1px solid #ccc;border-radius:4px;font-size:16px}
-.minimum-note{font-size:12px;color:#777;margin-top:12px}
-.size-error{color:#c62828;font-size:13px;margin-top:10px;display:none}
-.price-summary{border-top:1px solid #ddd;margin-top:18px;padding-top:15px}
-.price-row{display:flex;justify-content:space-between;gap:10px;margin:9px 0;font-size:14px}
-.total-row{font-size:19px;font-weight:bold;margin-top:15px}
-.quantity-label{display:block;font-weight:bold;margin:20px 0 10px}
-.quantity-control{display:flex;align-items:center;gap:15px;margin-bottom:22px}
-.quantity-control button{width:38px;height:38px;border:1px solid #ddd;background:white;font-size:20px;cursor:pointer}
-#quantity{font-size:17px;min-width:20px;text-align:center}
-.action-button{display:block;width:100%;padding:16px;border:none;cursor:pointer;font-size:15px;font-weight:bold;margin-top:12px;border-radius:3px}
-.add-button{background:#222;color:white}
-.buy-button{background:#e8e8e8;color:#222}
+.size-fields label{display:block;font-size:12px;margin-bottom:7px;font-weight:bold}
+.size-fields input{width:100%;padding:12px;border:1px solid #ccc;border-radius:4px;font-size:15px}
+.minimum-note,.size-error{font-size:12px;margin-top:10px;color:#777}
+.size-error{color:#c62828;display:none}
+.price-summary{border-top:1px solid #ddd;margin-top:17px;padding-top:12px}
+.price-row{display:flex;justify-content:space-between;gap:10px;margin:10px 0;font-size:13px}
+.total-row{font-size:18px;font-weight:bold}
+.quantity-label{font-size:14px;font-weight:bold;margin:22px 0 10px}
+.quantity-control{display:flex;align-items:center;gap:0;margin-bottom:18px}
+.quantity-control button{width:40px;height:40px;background:#fff;border:1px solid #ddd;font-size:20px;cursor:pointer}
+#quantity{width:48px;text-align:center;font-size:15px}
+.action-button{width:100%;padding:16px;border:1px solid #222;cursor:pointer;font-size:14px;font-weight:bold;margin-top:10px;border-radius:3px}
+.add-button{background:#fff;color:#222}
+.buy-button{background:#171717;color:#fff}
 .action-button:disabled{opacity:.5;cursor:not-allowed}
-.details-box{border-top:1px solid #eee;margin-top:28px;padding-top:20px;line-height:1.9;color:#666;font-size:14px}
+.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:45px 0;border-top:1px solid #eee;border-bottom:1px solid #eee;padding:25px 0}
+.benefit{text-align:center;font-size:12px;color:#777;line-height:1.6}
+.benefit strong{display:block;font-size:14px;color:#222;margin-bottom:5px}
+.section{margin:48px 0}
+.section h2{text-align:center;font-size:24px;margin-bottom:24px}
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center}
+.timeline-step{padding:18px 8px;border:1px solid #eee;border-radius:5px;font-size:13px}
+.timeline-step span{display:block;font-size:23px;margin-bottom:8px}
+.accordion{border-top:1px solid #ddd}
+.accordion:last-child{border-bottom:1px solid #ddd}
+.accordion summary{padding:18px 5px;cursor:pointer;font-weight:bold;font-size:14px}
+.accordion-content{padding:0 5px 18px;color:#777;font-size:13px;line-height:1.8}
+.video-placeholder{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.video-card{aspect-ratio:4/5;background:#f2f2f2;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#777;font-size:30px}
+.reviews-title{text-align:center;font-size:24px;margin:55px 0}
+footer{margin-top:60px;padding:25px;background:#171717;color:white;text-align:center;font-size:12px}
 .error{text-align:center;padding:70px 20px}
-footer{margin-top:60px;padding:25px;background:#222;color:white;text-align:center;font-size:13px}
-@media(max-width:700px){
-.product-layout{grid-template-columns:1fr;gap:25px}
+@media(max-width:750px){
+header{height:60px;padding:0 16px}
+.brand{font-size:16px}
+.header-links{gap:10px;font-size:11px}
+.container{padding:0 15px;margin-top:20px}
+.product-layout{grid-template-columns:1fr;gap:28px}
 .product-info h1{font-size:24px}
-.container{margin-top:22px}
+.benefits{gap:5px}
+.benefit{font-size:10px}
+.benefit strong{font-size:11px}
+.video-placeholder{grid-template-columns:repeat(2,1fr)}
+.timeline-step{font-size:11px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="topbar">Welcome to HOTANI ACRYLIC STORE</div>
+<div class="topbar">Premium Islamic Wall Art | HOTANI ACRYLIC STORE</div>
 
 <header>
 <a href="../index.html" class="brand">HOTANI ACRYLIC STORE</a>
-<a href="../index.html">← Continue Shopping</a>
+<div class="header-links">
+<a href="../index.html">Home</a>
+<a href="../index.html">Shop All</a>
+<a href="../index.html">Continue Shopping</a>
+</div>
 </header>
 
 <main class="container">
 <div class="breadcrumb">
 <a href="../index.html">Home</a> / Product Details
 </div>
-<div id="product-details"><p>Loading product...</p></div>
+
+<div id="product-details">Loading product...</div>
 </main>
 
 <footer>© HOTANI ACRYLIC STORE. All Rights Reserved.</footer>
 
 <script src="../data/products.js"></script>
-
 <script src="../products/islamic-calligraphy/gold-acrylic-bismillah/product.js"></script>
 <script src="../products/islamic-calligraphy/round-ayatul-kursi/product.js"></script>
 <script src="../products/islamic-calligraphy/mashaallah-gold-acrylic/product.js"></script>
@@ -87,282 +127,256 @@ footer{margin-top:60px;padding:25px;background:#222;color:white;text-align:cente
 <script>
 (function(){
 
-const params = new URLSearchParams(window.location.search);
+const params = new URLSearchParams(location.search);
 const productId = params.get("id");
 const product = window.HOTANI_GET_PRODUCT(productId);
 const container = document.getElementById("product-details");
 
 if(!product){
-container.innerHTML = `
-<div class="error">
-<h2>Product Not Found</h2>
-<p>Sorry, this product is not available.</p>
-<a href="../index.html">Back to Home</a>
-</div>`;
+container.innerHTML='<div class="error"><h2>Product Not Found</h2><a href="../index.html">Back to Home</a></div>';
 return;
 }
 
-const basePrice = Number(product.offerPrice) > 0
-? Number(product.offerPrice)
-: Number(product.price);
+const basePrice = Number(product.offerPrice)>0 ? Number(product.offerPrice) : Number(product.price);
+const isBismillah = product.id === "gold-acrylic-bismillah";
 
-let unit = "inch";
-let quantity = 1;
-let width = 12;
-let height = 12;
-let calculatedPrice = basePrice;
+let unit="inch",quantity=1,width=12,height=12,calculatedPrice=basePrice;
+let selectedPreset="";
 
-function money(value){
-return "Rs. " + Math.round(value).toLocaleString("en-PK");
+function money(n){return "Rs. "+Math.round(n).toLocaleString("en-PK");}
+function sizeText(){return width+" × "+height+" "+(unit==="inch"?"inches":"feet");}
+
+const galleryImages=[product.image];
+
+if(Array.isArray(product.images)){
+product.images.forEach(img=>galleryImages.push(img));
 }
 
-function sizeText(){
-return unit === "inch"
-? width + " × " + height + " inches"
-: width + " × " + height + " feet";
-}
-
-container.innerHTML = `
+container.innerHTML=`
 <div class="product-layout">
-
-<div class="product-image-box">
-<img src="../${product.image}" alt="${product.name}">
+<div>
+<div class="gallery-main">
+<img id="main-product-image" src="../${product.image}" alt="${product.name}">
+</div>
+<div class="thumbnails" id="thumbnails"></div>
 </div>
 
 <div class="product-info">
-
-${product.badge ? `<span class="badge">${product.badge}</span>` : ""}
-
+<div class="rating"><span class="stars">★★★★★</span> &nbsp; Rated 4.8/5 By Happy Customers</div>
 <h1>${product.name}</h1>
 
 <div class="prices">
-${Number(product.offerPrice)>0
-? `<span class="old-price">${money(product.price)}</span>` : ""}
-<span class="sale-price">${money(basePrice)}</span>
+${Number(product.offerPrice)>0?`<span class="sale-price">${money(basePrice)}</span><span class="old-price">${money(product.price)}</span>`:`<span class="sale-price">${money(basePrice)}</span>`}
+${Number(product.offerPrice)>0?`<span class="discount">SAVE ${money(Number(product.price)-basePrice)}</span>`:""}
 </div>
 
-<p class="description">
-Discover premium quality acrylic wall décor from HOTANI ACRYLIC STORE.
-Choose your required custom size and get an automatic price calculation.
-</p>
+<p class="description">Premium quality acrylic wall art, beautifully designed for your home. Select your preferred size or calculate a custom size below.</p>
+
+<div class="stock"><span class="stock-dot"></span><strong>${isBismillah?100:(product.stock??"Available")}</strong> in stock</div>
+
+${isBismillah?`
+<div class="option-title">Choose Size</div>
+<div class="size-options">
+<button class="size-option" data-w="6" data-h="24">6 × 24 in</button>
+<button class="size-option" data-w="8" data-h="32">8 × 32 in</button>
+</div>`:""}
 
 <div class="calculator">
-
 <h3>Custom Size Calculator</h3>
-<div class="calculator-note">
-Base price: ${money(basePrice)} for 12 × 12 inches (1 × 1 feet).
-Select your required size below.
-</div>
-
+<div class="calculator-note">Base price: ${money(basePrice)} for 12 × 12 inches (1 × 1 feet). Select your required custom size.</div>
 <div class="unit-options">
 <button type="button" id="inch-unit" class="active">Inches</button>
 <button type="button" id="feet-unit">Feet</button>
 </div>
-
 <div class="size-fields">
-<div>
-<label for="width-input">Width (<span id="unit-width">inches</span>)</label>
-<input id="width-input" type="number" min="12" step="0.5" value="12">
+<div><label>Width (<span id="width-unit">inches</span>)</label><input id="width-input" type="number" min="12" step=".5" value="12"></div>
+<div><label>Height (<span id="height-unit">inches</span>)</label><input id="height-input" type="number" min="12" step=".5" value="12"></div>
 </div>
-
-<div>
-<label for="height-input">Height (<span id="unit-height">inches</span>)</label>
-<input id="height-input" type="number" min="12" step="0.5" value="12">
-</div>
-</div>
-
-<div class="minimum-note" id="minimum-note">
-Minimum size: 12 × 12 inches
-</div>
-
-<div class="size-error" id="size-error">
-Minimum size must be 12 × 12 inches or 1 × 1 feet.
-</div>
-
+<div class="minimum-note" id="minimum-note">Minimum size: 12 × 12 inches</div>
+<div class="size-error" id="size-error">Minimum size must be 12 × 12 inches or 1 × 1 feet.</div>
 <div class="price-summary">
-<div class="price-row">
-<span>Selected Size</span>
-<strong id="selected-size">12 × 12 inches</strong>
-</div>
-
-<div class="price-row">
-<span>Price per 12 × 12 inches</span>
-<strong>${money(basePrice)}</strong>
-</div>
-
-<div class="price-row total-row">
-<span>Your Size Price</span>
-<strong id="calculated-price">${money(basePrice)}</strong>
-</div>
+<div class="price-row"><span>Selected Size</span><strong id="selected-size">12 × 12 inches</strong></div>
+<div class="price-row"><span>Base Price</span><strong>${money(basePrice)}</strong></div>
+<div class="price-row total-row"><span>Your Size Price</span><strong id="calculated-price">${money(basePrice)}</strong></div>
 </div>
 </div>
 
 <label class="quantity-label">Quantity</label>
 <div class="quantity-control">
-<button type="button" id="minus">−</button>
+<button id="minus" type="button">−</button>
 <span id="quantity">1</span>
-<button type="button" id="plus">+</button>
+<button id="plus" type="button">+</button>
 </div>
 
-<button class="action-button add-button" id="add-cart">
-ADD TO CART
-</button>
+<button class="action-button add-button" id="add-cart">ADD TO CART</button>
+<button class="action-button buy-button" id="buy-now">BUY IT NOW — ORDER ON WHATSAPP</button>
 
-<button class="action-button buy-button" id="buy-now">
-ORDER ON WHATSAPP
-</button>
+</div>
+</div>
 
-<div class="details-box">
-<strong>Product Information</strong><br>
-Product: ${product.name}<br>
+<div class="benefits">
+<div class="benefit"><strong>Cash on Delivery</strong>Pay Only When You Receive</div>
+<div class="benefit"><strong>Easy Returns</strong>Contact us for return assistance</div>
+<div class="benefit"><strong>Customer Support</strong>We're Here to Help</div>
+</div>
+
+<div class="section">
+<h2>Order Tracking</h2>
+<div class="timeline">
+<div class="timeline-step"><span>📦</span><strong>Order Placed</strong></div>
+<div class="timeline-step"><span>🚚</span><strong>Dispatched</strong></div>
+<div class="timeline-step"><span>🏠</span><strong>Delivered</strong></div>
+</div>
+</div>
+
+<div class="section">
+<details class="accordion">
+<summary>Product Details</summary>
+<div class="accordion-content">
+${product.name}<br>
 Category: ${product.category}<br>
 Store: HOTANI ACRYLIC STORE
 </div>
+</details>
+<details class="accordion">
+<summary>Shipping & Returns</summary>
+<div class="accordion-content">For shipping, delivery and return information, please contact HOTANI ACRYLIC STORE on WhatsApp.</div>
+</details>
+</div>
 
+<div class="section">
+<h2>See It Before You Buy It</h2>
+<p style="text-align:center;color:#888;font-size:13px">Explore our acrylic wall art and see how it can enhance your space.</p>
+<div class="video-placeholder">
+<div class="video-card">▶</div>
+<div class="video-card">▶</div>
+<div class="video-card">▶</div>
+<div class="video-card">▶</div>
 </div>
 </div>
+
+<h2 class="reviews-title">What Our Customers Say</h2>
 `;
 
-const widthInput = document.getElementById("width-input");
-const heightInput = document.getElementById("height-input");
-const errorBox = document.getElementById("size-error");
+const thumbBox=document.getElementById("thumbnails");
+
+galleryImages.forEach((img,index)=>{
+const b=document.createElement("button");
+b.className="thumb"+(index===0?" active":"");
+b.type="button";
+b.innerHTML=`<img src="../${img}" alt="Product image ${index+1}">`;
+b.addEventListener("click",()=>{
+document.getElementById("main-product-image").src="../"+img;
+document.querySelectorAll(".thumb").forEach(t=>t.classList.remove("active"));
+b.classList.add("active");
+});
+thumbBox.appendChild(b);
+});
+
+const wi=document.getElementById("width-input");
+const hi=document.getElementById("height-input");
+const error=document.getElementById("size-error");
 
 function updatePrice(){
+width=Number(wi.value);height=Number(hi.value);
+const min=unit==="inch"?12:1;
 
-width = Number(widthInput.value);
-height = Number(heightInput.value);
-
-const minimum = unit === "inch" ? 12 : 1;
-
-if(!widthInput.value || !heightInput.value ||
-width < minimum || height < minimum ||
-!Number.isFinite(width) || !Number.isFinite(height)){
-
-errorBox.style.display = "block";
-document.getElementById("add-cart").disabled = true;
-document.getElementById("buy-now").disabled = true;
-document.getElementById("calculated-price").textContent = "Invalid Size";
+if(!wi.value||!hi.value||!Number.isFinite(width)||!Number.isFinite(height)||width<min||height<min){
+error.style.display="block";
+document.getElementById("add-cart").disabled=true;
+document.getElementById("buy-now").disabled=true;
+document.getElementById("calculated-price").textContent="Invalid Size";
 return false;
 }
 
-errorBox.style.display = "none";
-document.getElementById("add-cart").disabled = false;
-document.getElementById("buy-now").disabled = false;
+error.style.display="none";
+document.getElementById("add-cart").disabled=false;
+document.getElementById("buy-now").disabled=false;
 
-const widthInches = unit === "feet" ? width * 12 : width;
-const heightInches = unit === "feet" ? height * 12 : height;
+const w=unit==="feet"?width*12:width;
+const h=unit==="feet"?height*12:height;
+calculatedPrice=basePrice*(w*h/144);
 
-const area = widthInches * heightInches;
-calculatedPrice = basePrice * (area / 144);
-
-document.getElementById("selected-size").textContent = sizeText();
-document.getElementById("calculated-price").textContent = money(calculatedPrice);
-
+document.getElementById("selected-size").textContent=sizeText();
+document.getElementById("calculated-price").textContent=money(calculatedPrice);
 return true;
 }
 
-function changeUnit(newUnit){
-
-unit = newUnit;
-
-if(unit === "inch"){
-widthInput.value = 12;
-heightInput.value = 12;
-widthInput.min = 12;
-heightInput.min = 12;
-widthInput.step = 0.5;
-heightInput.step = 0.5;
-
-document.getElementById("unit-width").textContent = "inches";
-document.getElementById("unit-height").textContent = "inches";
-document.getElementById("minimum-note").textContent = "Minimum size: 12 × 12 inches";
-document.getElementById("inch-unit").classList.add("active");
-document.getElementById("feet-unit").classList.remove("active");
-}else{
-widthInput.value = 1;
-heightInput.value = 1;
-widthInput.min = 1;
-heightInput.min = 1;
-widthInput.step = 0.1;
-heightInput.step = 0.1;
-
-document.getElementById("unit-width").textContent = "feet";
-document.getElementById("unit-height").textContent = "feet";
-document.getElementById("minimum-note").textContent = "Minimum size: 1 × 1 feet";
-document.getElementById("feet-unit").classList.add("active");
-document.getElementById("inch-unit").classList.remove("active");
-}
-
+function setUnit(next){
+unit=next;
+wi.value=next==="inch"?12:1;
+hi.value=next==="inch"?12:1;
+wi.min=hi.min=next==="inch"?12:1;
+wi.step=hi.step=next==="inch"?.5:.1;
+document.getElementById("width-unit").textContent=next==="inch"?"inches":"feet";
+document.getElementById("height-unit").textContent=next==="inch"?"inches":"feet";
+document.getElementById("minimum-note").textContent=next==="inch"?"Minimum size: 12 × 12 inches":"Minimum size: 1 × 1 feet";
+document.getElementById("inch-unit").classList.toggle("active",next==="inch");
+document.getElementById("feet-unit").classList.toggle("active",next==="feet");
+document.querySelectorAll(".size-option").forEach(b=>b.classList.remove("active"));
+selectedPreset="";
 updatePrice();
 }
 
-document.getElementById("inch-unit").addEventListener("click",()=>changeUnit("inch"));
-document.getElementById("feet-unit").addEventListener("click",()=>changeUnit("feet"));
-widthInput.addEventListener("input",updatePrice);
-heightInput.addEventListener("input",updatePrice);
+document.getElementById("inch-unit").onclick=()=>setUnit("inch");
+document.getElementById("feet-unit").onclick=()=>setUnit("feet");
+wi.oninput=updatePrice;hi.oninput=updatePrice;
 
-document.getElementById("minus").addEventListener("click",function(){
-if(quantity>1) quantity--;
-document.getElementById("quantity").textContent=quantity;
+document.querySelectorAll(".size-option").forEach(b=>{
+b.addEventListener("click",()=>{
+unit="inch";
+selectedPreset=b.dataset.w+"x"+b.dataset.h;
+wi.value=b.dataset.w;hi.value=b.dataset.h;
+wi.min=hi.min=1;
+document.getElementById("width-unit").textContent="inches";
+document.getElementById("height-unit").textContent="inches";
+document.getElementById("inch-unit").classList.add("active");
+document.getElementById("feet-unit").classList.remove("active");
+document.querySelectorAll(".size-option").forEach(x=>x.classList.remove("active"));
+b.classList.add("active");
+updatePrice();
+});
 });
 
-document.getElementById("plus").addEventListener("click",function(){
+document.getElementById("minus").onclick=()=>{
+if(quantity>1)quantity--;
+document.getElementById("quantity").textContent=quantity;
+};
+document.getElementById("plus").onclick=()=>{
 quantity++;
 document.getElementById("quantity").textContent=quantity;
-});
+};
 
-document.getElementById("add-cart").addEventListener("click",function(){
-
-if(!updatePrice()) return;
-
+document.getElementById("add-cart").onclick=()=>{
+if(!updatePrice())return;
 let cart=[];
-try{
-cart=JSON.parse(localStorage.getItem("hotani_cart"))||[];
-}catch(e){cart=[];}
+try{cart=JSON.parse(localStorage.getItem("hotani_cart"))||[];}catch(e){cart=[];}
 
-const customName = product.name + " (" + sizeText() + ")";
-const cartId = product.id + "-" + unit + "-" + width + "x" + height;
-
+const cartId=product.id+"-"+unit+"-"+width+"x"+height;
 const existing=cart.find(item=>item.id===cartId);
 
-if(existing){
-existing.quantity+=quantity;
-}else{
+if(existing){existing.quantity+=quantity;}
+else{
 cart.push({
 id:cartId,
 productId:product.id,
-name:customName,
+name:product.name+" ("+sizeText()+")",
 price:Math.round(calculatedPrice),
 image:product.image,
 quantity:quantity,
 customSize:sizeText()
 });
 }
-
 localStorage.setItem("hotani_cart",JSON.stringify(cart));
 alert("Product added to your cart!");
-});
+};
 
-document.getElementById("buy-now").addEventListener("click",function(){
-
-if(!updatePrice()) return;
-
+document.getElementById("buy-now").onclick=()=>{
+if(!updatePrice())return;
 const total=Math.round(calculatedPrice)*quantity;
-
-const message=
-"Assalam o Alaikum! I want to order:\n\n"+
-"Product: "+product.name+"\n"+
-"Custom Size: "+sizeText()+"\n"+
-"Quantity: "+quantity+"\n"+
-"Unit Price: "+money(calculatedPrice)+"\n"+
-"Total Price: "+money(total);
-
-window.open(
-"https://wa.me/923336461771?text="+encodeURIComponent(message),
-"_blank"
-);
-
-});
+const message="Assalam o Alaikum! I want to order:\n\nProduct: "+product.name+"\nSize: "+sizeText()+"\nQuantity: "+quantity+"\nUnit Price: "+money(calculatedPrice)+"\nTotal: "+money(total);
+window.open("https://wa.me/923336461771?text="+encodeURIComponent(message),"_blank");
+};
 
 updatePrice();
 
