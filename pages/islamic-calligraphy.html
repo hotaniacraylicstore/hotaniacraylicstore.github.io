@@ -1,133 +1,251 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Islamic Calligraphy | HOTANI ACRYLIC STORE</title>
+<title>Islamic Calligraphy | HOTANI ACRYLIC STORE</title>
+<link rel="stylesheet" href="../style.css">
 
-    <meta name="description"
-        content="Explore beautiful Islamic calligraphy wall art at HOTANI ACRYLIC STORE.">
-
-    <link rel="stylesheet" href="../style.css">
+<style>
+.category-page{
+max-width:1250px;
+margin:40px auto;
+padding:20px;
+}
+.category-heading{
+text-align:center;
+margin-bottom:35px;
+}
+.category-heading h1{
+font-size:32px;
+margin-bottom:10px;
+}
+.category-heading p{
+color:#777;
+}
+.product-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+gap:25px;
+}
+.product-card{
+position:relative;
+border:1px solid #eee;
+border-radius:10px;
+overflow:hidden;
+background:#fff;
+transition:.3s;
+}
+.product-card:hover{
+transform:translateY(-5px);
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+.product-image-link{
+display:block;
+background:#f7f7f7;
+}
+.product-card img{
+width:100%;
+aspect-ratio:1/1;
+object-fit:cover;
+display:block;
+}
+.product-card-content{
+padding:17px;
+}
+.product-name{
+color:#222;
+text-decoration:none;
+}
+.product-name h3{
+font-size:17px;
+margin:0 0 12px;
+}
+.product-price{
+margin-bottom:15px;
+}
+.old-price{
+color:#999;
+text-decoration:line-through;
+margin-right:8px;
+}
+.sale-price{
+font-weight:bold;
+font-size:19px;
+}
+.view-details{
+display:block;
+text-align:center;
+background:#222;
+color:white;
+padding:12px;
+border-radius:5px;
+text-decoration:none;
+font-size:14px;
+}
+.sale-badge{
+position:absolute;
+top:12px;
+left:12px;
+background:#222;
+color:#fff;
+padding:7px 10px;
+font-size:12px;
+z-index:2;
+}
+.empty-message{
+grid-column:1/-1;
+text-align:center;
+padding:50px 10px;
+color:#777;
+}
+.site-header{
+padding:20px 4%;
+border-bottom:1px solid #eee;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+}
+.site-header a{
+color:#222;
+text-decoration:none;
+}
+.site-brand{
+font-size:21px;
+font-weight:bold;
+}
+.breadcrumb{
+padding:15px 4%;
+background:#f7f7f7;
+font-size:14px;
+}
+.breadcrumb a{
+color:#333;
+text-decoration:none;
+}
+.site-footer{
+background:#222;
+color:white;
+padding:25px;
+text-align:center;
+margin-top:50px;
+}
+@media(max-width:600px){
+.category-heading h1{font-size:25px}
+.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.product-card-content{padding:12px}
+.product-name h3{font-size:14px}
+.sale-price{font-size:16px}
+}
+</style>
 </head>
 
 <body>
 
-    <div id="announcement-bar">
-        Welcome to HOTANI ACRYLIC STORE
-    </div>
+<div id="announcement-bar">
+Welcome to HOTANI ACRYLIC STORE
+</div>
 
-    <header style="padding:20px 4%;border-bottom:1px solid #eee;">
-        <a href="../index.html" style="font-size:22px;font-weight:bold;">
-            HOTANI ACRYLIC STORE
-        </a>
+<header class="site-header">
+<a href="../index.html" class="site-brand">HOTANI ACRYLIC STORE</a>
+<a href="../index.html">← Home</a>
+</header>
 
-        <a href="../index.html" style="float:right;">Home</a>
-    </header>
+<div class="breadcrumb">
+<a href="../index.html">Home</a> / Islamic Calligraphy
+</div>
 
-    <nav style="padding:15px 4%;background:#f7f7f7;">
-        <a href="../index.html">Home</a> / Islamic Calligraphy
-    </nav>
+<main class="category-page">
 
-    <main style="padding:50px 4%;">
+<div class="category-heading">
+<h1>Islamic Calligraphy</h1>
+<p>Beautiful Islamic acrylic wall art for your home</p>
+</div>
 
-        <div class="section-heading">
-            <h2>Islamic Calligraphy</h2>
-            <p>Beautiful Islamic art to decorate your home</p>
-        </div>
+<div id="category-products" class="product-grid">
+<p class="empty-message">Loading products...</p>
+</div>
 
-        <div id="category-products" class="product-grid">
-            <p>Loading products...</p>
-        </div>
+</main>
 
-    </main>
+<footer class="site-footer">
+© 2026 HOTANI ACRYLIC STORE. All Rights Reserved.
+</footer>
 
-    <footer style="background:#222;color:white;padding:25px;text-align:center;">
-        © 2026 HOTANI ACRYLIC STORE. All Rights Reserved.
-    </footer>
+<script src="../data/products.js"></script>
 
-    <!-- PRODUCT DATA -->
-    <script src="../data/products.js"></script>
+<script src="../products/islamic-calligraphy/gold-acrylic-bismillah/product.js"></script>
+<script src="../products/islamic-calligraphy/round-ayatul-kursi/product.js"></script>
+<script src="../products/islamic-calligraphy/mashaallah-gold-acrylic/product.js"></script>
+<script src="../products/islamic-calligraphy/mashaallah-la-quwwata/product.js"></script>
 
-    <!-- ISLAMIC CALLIGRAPHY PRODUCTS -->
-    <script src="../products/islamic-calligraphy/gold-acrylic-bismillah/product.js"></script>
+<script>
+(function(){
 
-    <script src="../products/islamic-calligraphy/round-ayatul-kursi/product.js"></script>
+const container=document.getElementById("category-products");
 
-    <script src="../products/islamic-calligraphy/mashaallah-gold-acrylic/product.js"></script>
+const products=window.HOTANI_GET_PRODUCTS_BY_CATEGORY("islamic-calligraphy");
 
-    <script src="../products/islamic-calligraphy/mashaallah-la-quwwata/product.js"></script>
+function money(price){
+return "Rs. "+Number(price).toLocaleString("en-PK");
+}
 
-    <!-- DISPLAY PRODUCTS -->
-    <script>
+if(!products || products.length===0){
 
-        const container = document.getElementById("category-products");
+container.innerHTML=`
+<p class="empty-message">New products coming soon.</p>
+`;
 
-        const products =
-            window.HOTANI_GET_PRODUCTS_BY_CATEGORY("islamic-calligraphy");
+return;
+}
 
-        function formatPrice(price) {
-            return "Rs. " + Number(price).toLocaleString("en-PK");
-        }
+container.innerHTML=products.map(product=>{
 
-        if (!products || products.length === 0) {
+const price=Number(product.offerPrice)>0
+? Number(product.offerPrice)
+: Number(product.price);
 
-            container.innerHTML = `
-                <p style="grid-column:1/-1;text-align:center;padding:40px;">
-                    New products coming soon.
-                </p>
-            `;
+const detailLink="product-details.html?id="+encodeURIComponent(product.id);
 
-        } else {
+return `
+<div class="product-card">
 
-            container.innerHTML = products.map(product => {
+${product.badge
+? `<span class="sale-badge">${product.badge}</span>`
+: ""}
 
-                const price = Number(product.offerPrice) > 0
-                    ? Number(product.offerPrice)
-                    : Number(product.price);
+<a class="product-image-link" href="${detailLink}">
+<img src="../${product.image}" alt="${product.name}" loading="lazy">
+</a>
 
-                return `
-                    <div class="product-card">
+<div class="product-card-content">
 
-                        ${product.badge
-                            ? `<span class="sale-badge">${product.badge}</span>`
-                            : ""}
+<a class="product-name" href="${detailLink}">
+<h3>${product.name}</h3>
+</a>
 
-                        <img
-                            src="../${product.image}"
-                            alt="${product.name}"
-                            loading="lazy"
-                        >
+<div class="product-price">
+${Number(product.offerPrice)>0
+? `<span class="old-price">${money(product.price)}</span>`
+: ""}
+<span class="sale-price">${money(price)}</span>
+</div>
 
-                        <div class="product-card-content">
+<a class="view-details" href="${detailLink}">
+VIEW DETAILS
+</a>
 
-                            <h3>${product.name}</h3>
+</div>
+</div>
+`;
 
-                            <div class="product-price">
+}).join("");
 
-                                ${Number(product.offerPrice) > 0
-                                    ? `<span class="old-price">${formatPrice(product.price)}</span>`
-                                    : ""}
-
-                                <span class="sale-price">
-                                    ${formatPrice(price)}
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                `;
-
-            }).join("");
-
-        }
-
-    </script>
+})();
+</script>
 
 </body>
 </html>
