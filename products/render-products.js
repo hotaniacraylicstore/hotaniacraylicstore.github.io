@@ -22,6 +22,15 @@
         });
     }
 
+    function getProductLink(productId) {
+        const isPagesFolder = window.location.pathname.includes("/pages/");
+        const pagePath = isPagesFolder
+            ? "product-details.html"
+            : "pages/product-details.html";
+
+        return pagePath + "?id=" + encodeURIComponent(productId);
+    }
+
     function createProductCard(product) {
 
         const price = Number(product.offerPrice) > 0
@@ -36,20 +45,26 @@
             ? `<span class="sale-badge">${escapeHTML(product.badge)}</span>`
             : "";
 
+        const productLink = getProductLink(product.id);
+
         return `
             <div class="product-card">
 
                 ${badge}
 
-                <img
-                    src="${escapeHTML(product.image)}"
-                    alt="${escapeHTML(product.name)}"
-                    loading="lazy"
-                >
+                <a href="${productLink}" class="product-detail-link">
+                    <img
+                        src="${escapeHTML(product.image)}"
+                        alt="${escapeHTML(product.name)}"
+                        loading="lazy"
+                    >
+                </a>
 
                 <div class="product-card-content">
 
-                    <h3>${escapeHTML(product.name)}</h3>
+                    <a href="${productLink}" class="product-detail-link">
+                        <h3>${escapeHTML(product.name)}</h3>
+                    </a>
 
                     <div class="product-price">
                         ${oldPrice}
@@ -101,17 +116,11 @@
     function renderAllProducts() {
 
         renderCategory("islamic-calligraphy", "islamic-calligraphy-products");
-
         renderCategory("modern-wall-art", "modern-wall-art-products");
-
         renderCategory("acrylic-mirrors", "acrylic-mirror-products");
-
         renderCategory("wall-clocks", "wall-clock-products");
-
         renderCategory("custom-plates", "custom-plates-products");
-
         renderCategory("accessories", "accessories-products");
-
         renderCategory("wall-decor", "wall-decor-products");
 
     }
