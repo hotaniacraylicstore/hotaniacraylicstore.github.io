@@ -4,7 +4,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Product Details | HOTANI ACRYLIC STORE</title>
+
+<meta name="description" content="Shop premium Islamic acrylic wall art, calligraphy and home decor at HOTANI ACRYLIC STORE, Pakistan.">
+<meta name="robots" content="index, follow">
+
+<meta property="og:site_name" content="HOTANI ACRYLIC STORE">
+<meta property="og:type" content="product">
+<meta property="og:title" content="HOTANI ACRYLIC STORE | Premium Wall Decor">
+<meta property="og:description" content="Explore premium Islamic calligraphy, acrylic wall art and home decor.">
 
 <style>
 *{box-sizing:border-box}
@@ -140,6 +149,70 @@ return;
 const basePrice = Number(product.offerPrice)>0 ? Number(product.offerPrice) : Number(product.price);
 const isBismillah = product.id === "gold-acrylic-bismillah";
 
+// =====================================
+// PRODUCT SEO SETTINGS
+// =====================================
+
+const seoDescription = `Buy ${product.name} from HOTANI ACRYLIC STORE. Premium quality acrylic wall art with custom size options. Order online in Pakistan.`;
+
+document.title = `${product.name} | HOTANI ACRYLIC STORE`;
+
+document.querySelector('meta[name="description"]').content = seoDescription;
+
+document.querySelector('meta[property="og:title"]').content = document.title;
+
+document.querySelector('meta[property="og:description"]').content = seoDescription;
+
+// Canonical URL: keeps the product ID in the URL
+let canonical = document.querySelector('link[rel="canonical"]');
+
+if(!canonical){
+canonical = document.createElement("link");
+canonical.rel = "canonical";
+document.head.appendChild(canonical);
+}
+
+canonical.href = window.location.origin + window.location.pathname + window.location.search;
+
+// Product structured data for search engines
+const productImages = [product.image];
+
+if(Array.isArray(product.images)){
+product.images.forEach(img => productImages.push(img));
+}
+
+const productSchema = {
+"@context": "https://schema.org/",
+"@type": "Product",
+"name": product.name,
+"image": productImages.map(img => new URL("../" + img, window.location.href).href),
+"description": seoDescription,
+"brand": {
+"@type": "Brand",
+"name": "HOTANI ACRYLIC STORE"
+},
+"offers": {
+"@type": "Offer",
+"url": canonical.href,
+"priceCurrency": "PKR",
+"price": basePrice.toString(),
+"availability": "https://schema.org/InStock",
+"seller": {
+"@type": "Organization",
+"name": "HOTANI ACRYLIC STORE"
+}
+}
+};
+
+const schemaScript = document.createElement("script");
+schemaScript.type = "application/ld+json";
+schemaScript.textContent = JSON.stringify(productSchema);
+document.head.appendChild(schemaScript);
+
+// =====================================
+// EXISTING PRODUCT PAGE
+// =====================================
+
 let unit="inch",quantity=1,width=6,height=6,calculatedPrice=basePrice;
 let selectedPreset="";
 
@@ -170,7 +243,7 @@ ${Number(product.offerPrice)>0?`<span class="sale-price">${money(basePrice)}</sp
 ${Number(product.offerPrice)>0?`<span class="discount">SAVE ${money(Number(product.price)-basePrice)}</span>`:""}
 </div>
 
-<p class="description">Premium quality acrylic wall art, beautifully designed for your home. Select your preferred size or calculate a custom size below.</p>
+<p class="description">${seoDescription}</p>
 
 <div class="stock"><span class="stock-dot"></span><strong>${isBismillah?100:(product.stock??"Available")}</strong> in stock</div>
 
@@ -264,7 +337,7 @@ galleryImages.forEach((img,index)=>{
 const b=document.createElement("button");
 b.className="thumb"+(index===0?" active":"");
 b.type="button";
-b.innerHTML=`<img src="../${img}" alt="Product image ${index+1}">`;
+b.innerHTML=`<img src="../${img}" alt="${product.name} image ${index+1}">`;
 b.addEventListener("click",()=>{
 document.getElementById("main-product-image").src="../"+img;
 document.querySelectorAll(".thumb").forEach(t=>t.classList.remove("active"));
@@ -278,7 +351,8 @@ const hi=document.getElementById("height-input");
 const error=document.getElementById("size-error");
 
 function updatePrice(){
-width=Number(wi.value);height=Number(hi.value);
+width=Number(wi.value);
+height=Number(hi.value);
 const min=unit==="inch"?6:0.5;
 
 if(!wi.value||!hi.value||!Number.isFinite(width)||!Number.isFinite(height)||width<min||height<min){
@@ -320,13 +394,15 @@ updatePrice();
 
 document.getElementById("inch-unit").onclick=()=>setUnit("inch");
 document.getElementById("feet-unit").onclick=()=>setUnit("feet");
-wi.oninput=updatePrice;hi.oninput=updatePrice;
+wi.oninput=updatePrice;
+hi.oninput=updatePrice;
 
 document.querySelectorAll(".size-option").forEach(b=>{
 b.addEventListener("click",()=>{
 unit="inch";
 selectedPreset=b.dataset.w+"x"+b.dataset.h;
-wi.value=b.dataset.w;hi.value=b.dataset.h;
+wi.value=b.dataset.w;
+hi.value=b.dataset.h;
 wi.min=hi.min=6;
 document.getElementById("width-unit").textContent="inches";
 document.getElementById("height-unit").textContent="inches";
@@ -342,6 +418,7 @@ document.getElementById("minus").onclick=()=>{
 if(quantity>1)quantity--;
 document.getElementById("quantity").textContent=quantity;
 };
+
 document.getElementById("plus").onclick=()=>{
 quantity++;
 document.getElementById("quantity").textContent=quantity;
@@ -349,14 +426,20 @@ document.getElementById("quantity").textContent=quantity;
 
 document.getElementById("add-cart").onclick=()=>{
 if(!updatePrice())return;
+
 let cart=[];
-try{cart=JSON.parse(localStorage.getItem("hotani_cart"))||[];}catch(e){cart=[];}
+try{
+cart=JSON.parse(localStorage.getItem("hotani_cart"))||[];
+}catch(e){
+cart=[];
+}
 
 const cartId=product.id+"-"+unit+"-"+width+"x"+height;
 const existing=cart.find(item=>item.id===cartId);
 
-if(existing){existing.quantity+=quantity;}
-else{
+if(existing){
+existing.quantity+=quantity;
+}else{
 cart.push({
 id:cartId,
 productId:product.id,
@@ -367,14 +450,18 @@ quantity:quantity,
 customSize:sizeText()
 });
 }
+
 localStorage.setItem("hotani_cart",JSON.stringify(cart));
 alert("Product added to your cart!");
 };
 
 document.getElementById("buy-now").onclick=()=>{
 if(!updatePrice())return;
+
 const total=Math.round(calculatedPrice)*quantity;
+
 const message="Assalam o Alaikum! I want to order:\n\nProduct: "+product.name+"\nSize: "+sizeText()+"\nQuantity: "+quantity+"\nUnit Price: "+money(calculatedPrice)+"\nTotal: "+money(total);
+
 window.open("https://wa.me/923336461771?text="+encodeURIComponent(message),"_blank");
 };
 
